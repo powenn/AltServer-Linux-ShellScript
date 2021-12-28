@@ -4,6 +4,28 @@ Not finished yet
 ```
 wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/setup.sh && chmod +x setup.sh
 ```
+`apt setuo`
 ```
-wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/test.sh && chmod +x test.sh
+sudo apt-get install \
+	build-essential \
+	checkinstall \
+	git \
+	autoconf \
+	automake \
+	libtool-bin \
+	libplist-dev \
+	libusbmuxd-dev \
+	libimobiledevice-glue-dev \
+	libssl-dev \
+	usbmuxd \
+	git 
+  ```
+  ```
+  git clone https://github.com/libimobiledevice/libimobiledevice.git
+cd libimobiledevice
+```
+```
+./autogen.sh
+make
+sudo make install
 ```
