@@ -29,3 +29,4 @@ cd libimobiledevice
 make
 sudo make install
 ```
+AltServer from https://github.com/rileytestut/AltStore/files/7393624/AltServer.zip
