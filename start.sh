@@ -24,7 +24,7 @@ echo "Please provide the name of ipa (example: powen.ipa)"
 ls ./ipa
 read name
 
-PATH = ./ipa/$name
+PATH=./ipa/$name
 
 ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
 echo "Finished"
