@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 for job in `jobs -p`
 do
@@ -13,6 +13,8 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/u
 wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/start.sh
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServer
 chmod +x AltServer
+chmod +x start.sh
+chmod +x update.sh
 mkdir ipa
 echo "Finished"
 echo "run 'cd AltServer' and ./start.sh to start "

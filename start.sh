@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 for job in `jobs -p`
 do
