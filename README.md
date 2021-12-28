@@ -6,19 +6,7 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/s
 ```
 `apt setup dependencies`
 ```
-sudo apt-get install \
-	build-essential \
-	checkinstall \
-	git \
-	autoconf \
-	automake \
-	libtool-bin \
-	libplist-dev \
-	libusbmuxd-dev \
-	libimobiledevice-glue-dev \
-	libssl-dev \
-	usbmuxd \
-	git 
+sudo apt-get install build-essential checkinstall git autoconf automake libtool-bin libplist-dev libusbmuxd-dev libssl-dev usbmuxd 
   ```
   ```
   git clone https://github.com/libimobiledevice/libimobiledevice.git
