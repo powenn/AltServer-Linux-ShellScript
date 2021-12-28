@@ -10,7 +10,7 @@ done
 echo "Please connect to your device and press Enter to continue"
 read key
 
-UDID=$(lsusb -s :`lsusb | cut -d ' ' -f 4 | sed 's/://'` -v | grep iSerial)
+UDID=$(lsusb -v | grep -e "Apple Inc" | grep iSerial)
 echo "This is the UDID of your device"
 echo "${UDID}"
 
