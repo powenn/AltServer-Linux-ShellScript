@@ -4,7 +4,7 @@ Not finished yet
 ```
 wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/setup.sh && chmod +x setup.sh
 ```
-`apt setuo`
+`apt setup dependencies`
 ```
 sudo apt-get install \
 	build-essential \
