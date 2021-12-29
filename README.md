@@ -6,30 +6,6 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/s
 ```
 `apt setup dependencies`
 ```
-sudo apt-get install \
-    build-essential \
-    checkinstall \
-    git \
-    autoconf \
-    automake \
-    libtool-bin \
-    libplist-dev \
-    libusbmuxd-dev \
-    libssl-dev \
-    usbmuxd
-  ```
-  ```
-  git clone https://github.com/libimobiledevice/libimobiledevice.git
-cd libimobiledevice
-```
-```
- ./autogen.sh \
-    --prefix=/opt/local \
-    --enable-debug
-make
-sudo make install
-```
-```
 sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 ```
 AltServer from https://github.com/rileytestut/AltStore/files/7393624/AltServer.zip
