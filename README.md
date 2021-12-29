@@ -29,4 +29,7 @@ cd libimobiledevice
 make
 sudo make install
 ```
+```
+sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
+```
 AltServer from https://github.com/rileytestut/AltStore/files/7393624/AltServer.zip
