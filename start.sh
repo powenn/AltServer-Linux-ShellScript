@@ -26,6 +26,6 @@ read name
 
 PATH=./ipa/$name
 
-./AltServer -d -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
+./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
 echo "Finished"
 exit
