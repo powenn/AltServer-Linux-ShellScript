@@ -2,7 +2,7 @@
 
 I have only test on pinephone mobian
 
-Get start
+## Get start
 ```
 wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/setup.sh && chmod +x setup.sh
 ```
