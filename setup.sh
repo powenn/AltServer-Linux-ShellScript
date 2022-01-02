@@ -14,8 +14,10 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/s
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/install.sh
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/daemon.sh
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServer
+wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServerDaemon
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
 chmod +x AltServer
+chmod +x AltServerDaemon
 chmod +x start.sh
 chmod +x update.sh
 chmod +x install.sh
