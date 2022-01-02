@@ -22,7 +22,7 @@ To run AltServer,just run `./start.sh`
 ![photo][2]
 ![photo][3]
 
-# Note 
+## Note 
 AltStore installation not avaliable yet
 
 Video
