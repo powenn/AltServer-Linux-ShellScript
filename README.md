@@ -22,6 +22,9 @@ To run AltServer,just run `./start.sh`
 ![photo][2]
 ![photo][3]
 
+# Note 
+AltStore installation not avaliable yet
+
 Video
 
 <a href="https://www.youtube.com/watch?v=AgqoaBQd_p8">
@@ -32,7 +35,6 @@ AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
 The older one works
 
-AltStore installing not work yet
 
 [1]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/01.jpg
 [2]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/02.jpg
