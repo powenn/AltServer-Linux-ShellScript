@@ -14,6 +14,9 @@ You need idevicemobile and libplist-utils
 ```
 sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils libplist-utils
 ```
+
+Please storage your ipa files into AltServer/ipa
+
 To run AltServer,just run `./start.sh`
 ![photo][1]
 ![photo][2]
@@ -29,6 +32,7 @@ AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
 The older one works
 
+AltStore installing not work yet
 
 [1]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/01.jpg
 [2]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/02.jpg
