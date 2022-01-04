@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 for job in `jobs -p`
 do
   wait $job
@@ -20,16 +18,8 @@ read AppleID
 
 echo "Please provide the password of AppleID"
 read password
-rm -rf TempAltStore.ipa Payload
-unzip AltStore.ipa
-cd ./Payload/AltStore.app
-plistutil -i ./Info.plist -o ./temp.txt
-sed -i 's/00008030-001948590202802E/'${UDID}'/' ./temp.txt
-plistutil -i ./temp.txt -o ./Info.plist
-rm -rf ./temp.txt
-cd ../..
-zip -qr TempAltStore.ipa Payload
-PATH=./TempAltStore.ipa
+
+PATH=./AltStore.ipa
 
 ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
 
