@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 for job in `jobs -p`
 do
   wait $job
