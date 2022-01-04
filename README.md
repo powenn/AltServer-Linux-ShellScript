@@ -21,11 +21,11 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/s
 ```
 run `./setup.sh`
 
-You need idevicemobile and libplist-utils
+You need idevicemobile
 
 `apt setup dependencies`
 ```
-sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils libplist-utils
+sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 ```
 
 Please storage your ipa files into AltServer/ipa
