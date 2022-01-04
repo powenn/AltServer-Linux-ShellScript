@@ -1,6 +1,6 @@
 # AltServer-Linux-ShellScript
 
-I have only test on pinephone mobian
+Work on debian !!
 
 ## Get start
 ```
@@ -23,7 +23,7 @@ To run AltServer,just run `./start.sh`
 ![photo][3]
 
 ## Note 
-AltStore installation not avaliable yet
+AltStore installation workable,run with `./install.sh`
 
 Video
 
