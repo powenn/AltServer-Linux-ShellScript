@@ -1,6 +1,6 @@
 # AltServer-Linux-ShellScript
 
-Work on debian !!
+Works on debian 11 x64 !!
 
 And works on pinephone (tested on mobian)
 
@@ -9,7 +9,9 @@ Demo videos at the bottom
 AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
 ## Note 
-AltStore installation avaliable,run with `./install.sh`.
+AltStore installation avaliable,run with `./install.sh`
+
+And you can refresh apps with AltServer in daemon mode,run `./daemon..sh`
 ![photo][0]
 
 ## Get start
@@ -19,16 +21,16 @@ wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/s
 ```
 run `./setup.sh`
 
-You need idevicemobile and libplist-utils .
+You need idevicemobile and libplist-utils
 
 `apt setup dependencies`
 ```
 sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils libplist-utils
 ```
 
-Please storage your ipa files into AltServer/ipa .
+Please storage your ipa files into AltServer/ipa
 
-To install your ipa ,just run `./start.sh` and follow the instruction.
+To install your ipa ,just run `./start.sh` and follow the instruction
 ![photo][1]
 ![photo][2]
 ![photo][3]
