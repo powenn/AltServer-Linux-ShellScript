@@ -2,7 +2,7 @@
 
 set -e
 
-rm -rf AltServer start.sh update.sh AltStore.ipa daemon.sh install.sh
+rm -rf AltServer AltServerDaemon start.sh update.sh AltStore.ipa daemon.sh install.sh
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServer
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServerDaemon
 wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/start.sh
