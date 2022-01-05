@@ -12,6 +12,9 @@ AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 AltStore installation avaliable,run with `./install.sh`
 
 And you can refresh apps with AltServer in daemon mode,run `./daemon.sh`
+
+***Not work on every linux distribution and architectures,report issues to [issues](https://github.com/powenn/AltServer-Linux-ShellScript/issues)***
+
 ![photo][0]
 
 ## Get start
