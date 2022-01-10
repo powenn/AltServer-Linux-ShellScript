@@ -8,7 +8,7 @@ Demo videos at the bottom
 
 AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
-Special thanks to @NyaMisty for AltServer-Linux project 
+Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux project 
 
 ## Note 
 AltStore installation avaliable,run with `./install.sh`
