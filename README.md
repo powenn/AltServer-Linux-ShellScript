@@ -18,10 +18,9 @@ And you can refresh apps with AltServer in daemon mode,run `./daemon.sh`
 ![photo][0]
 
 ## Get start
-`get setup.sh`
-```
-wget https://raw.githubusercontent.com/powenn/AltServer-Linux-ShellScript/main/setup.sh && chmod +x setup.sh
-```
+
+Get the release which support your device architecture
+
 run `./setup.sh`
 
 You need idevicemobile
