@@ -1,15 +1,24 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Checking source"
-if [ ! -e "AltStore.ipa" ]; then
+if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/AltStore.ipa
-elif [ ! -e "ipa" ]; then
+elif [[ ! -e "ipa" ]]; then
     mkdir ipa
-elif [ ! -e "saved.txt" ]; then
+elif [[ ! -e "saved.txt" ]]; then
     touch saved.txt
-elif [ "stat AltServer | grep -rw-r--r--" != "" ] ; then
+elif [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
+
+ExistAccount=$(cat saved.txt)
+ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
+ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
+UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
+Account=$AppleID,$password
+CheckAccount=$(grep $Account saved.txt)
+
+
 
     cat << EOF >help.txt
 #####################################
@@ -28,6 +37,8 @@ OPTIONS
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   3, --Daemon mode
     Switch to Daemon mode to refresh apps or AltStore
+  e, --exit
+    Exit script
   h, --help
     Show this message
     
@@ -35,8 +46,11 @@ EOF
 
 cat help.txt
 
-echo "Enter OPTION to continue"
-read option
+RunScript=0
+while [ $RunScript = 0 ] ; do
+    echo "Enter OPTION to continue"
+    read option
+
 
 case "$option" in
   1|--Install-AltStore )
@@ -50,9 +64,8 @@ echo "Please connect to your device and press Enter to continue"
 read key
 idevicepair pair
 
-ExistAccount=$(cat saved.txt)
 
-if [ "$ExistAccount" != "" ]; then
+if [[ "$ExistAccount" != "" ]]; then
     echo "Do you want to use saved Account ? [y/n]"
     read reply
     case "$reply" in
@@ -61,8 +74,6 @@ if [ "$ExistAccount" != "" ]; then
         nl saved.txt
         echo "please enter the number "
         read number
-        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
-        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
         ;;
         [nN][oO]|[nN] )
         echo "Please provide your AppleID"
@@ -75,29 +86,30 @@ if [ "$ExistAccount" != "" ]; then
     esac
 fi
 
-UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
-Account=$AppleID,$password
-CheckAccount=$(grep $Account saved.txt)
 
 PATH=./AltStore.ipa
-if [ "$ExistID" == "" ]; then
+if [[ "$ExistID" == "" ]]; then
     ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
-elif [ "$ExistAccount" != "" ]; then
+elif [[ "$ExistAccount" != "" ]]; then
     ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
 fi
 echo "Finished"
-if [ "$CheckAccount" == "" ] ; then
+continue
+
+if [[ "$CheckAccount" == "" ]] ; then
     echo "Do you want to save this Account ? [y/n]"
 else
-    exit
+    continue
 fi
 read ans
 case "$ans" in
     [yY][eE][sS]|[yY] )
     echo "$Account" >> saved.txt
     echo "saved"
+    continue
     ;;
     [nN][oO]|[nN] )
+    continue
     ;;
     * )
     ;;
@@ -113,9 +125,7 @@ echo "Please connect to your device and press Enter to continue"
 read key
 idevicepair pair
 
-ExistAccount=$(cat saved.txt)
-
-if [ "$ExistAccount" != "" ]; then
+if [[ "$ExistAccount" != "" ]]; then
     echo "Do you want to use saved Account ? [y/n]"
     read reply
     case "$reply" in
@@ -124,8 +134,6 @@ if [ "$ExistAccount" != "" ]; then
         nl saved.txt
         echo "please enter the number "
         read number
-        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
-        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
         ;;
         [nN][oO]|[nN] )
         echo "Please provide your AppleID"
@@ -138,31 +146,32 @@ if [ "$ExistAccount" != "" ]; then
     esac
 fi
 
-UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
-Account=$AppleID,$password
-CheckAccount=$(grep $Account saved.txt)
 
 echo "Please provide the name of ipa (example: powen.ipa)"
 ls ./ipa
+read name
+
 PATH=./ipa/$name
-if [ "$ExistID" == "" ]; then
+if [[ "$ExistID" == "" ]]; then
     ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
-elif [ "$ExistAccount" != "" ]; then
+elif [[ "$ExistAccount" != "" ]]; then
     ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
 fi
 echo "Finished"
-if [ "$CheckAccount" == "" ] ; then
+if [[ "$CheckAccount" == "" ]] ; then
     echo "Do you want to save this Account ? [y/n]"
 else
-    exit
+    continue
 fi
 read ans
 case "$ans" in
     [yY][eE][sS]|[yY] )
     echo "$Account" >> saved.txt
     echo "saved"
+    continue
     ;;
     [nN][oO]|[nN] )
+    continue
     ;;
     * )
     ;;
@@ -178,8 +187,15 @@ echo "Please connect to your device and press Enter to continue"
 read key
 idevicepair pair
 ./AltServer
+continue
+    ;;
+  e|--exit )
+RunScript=1
     ;;
   h|--help )
 cat help.txt
+continue
     ;;
 esac
+
+done

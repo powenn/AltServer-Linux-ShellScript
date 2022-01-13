@@ -14,6 +14,8 @@ OPTIONS
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   3, --Daemon mode
     Switch to Daemon mode to refresh apps or AltStore
+  e, --exit
+    Exit script
   h, --help
     Show this message
     
