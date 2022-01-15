@@ -1,10 +1,8 @@
 #!/bin/bash
 
 echo "Checking source"
-if [[ ! -e "./ipa/AltStore.ipa" ]]; then
-    mkdir ipa
-    cd ipa && wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
-    cd ..
+if [[ ! -e "AltStore.ipa" ]]; then
+    wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
@@ -19,7 +17,11 @@ if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServerDaemon
 fi
 
-    cat << EOF >help.txt
+HasExistAccount=$(cat saved.txt)
+UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
+HasExistipa=$(ls ipa)
+
+cat << EOF >help.txt
     
 #####################################
 #  Welcome to the AltServer script  #
@@ -29,7 +31,9 @@ Usage: [OPTION]
 
 OPTIONS
 
-  i, --Install ipa
+  1, --Install AltStore
+    Install AltStore to your device
+  2, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   d, --Daemon mode
     Switch to Daemon mode to refresh apps or AltStore
@@ -66,12 +70,70 @@ while [ $RunScript = 0 ] ; do
     read option
     case "$option" in
     
-  i|--Install-ipa )
+  1|--Install-ipa )
   
-    HasExistAccount=$(cat saved.txt)
-    UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
-    HasExistipa=$(ls ipa)
+    for job in `jobs -p`
+    do
+    wait $job
+    done
+
+    idevicepair pair
+        
+    if [[ "$HasExistAccount" != "" ]]; then
+        echo "Do you want to use saved Account ? [y/n]"
+        read reply
+        case "$reply" in
+        [yY][eE][sS]|[yY] )
+        echo "Which account you want to use ? "
+        UseExistAccount=1
+        nl saved.txt
+        echo "please enter the number "
+        read number
+        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
+        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
+        ;;
+        [nN][oO]|[nN] )
+        UseExistAccount=0
+        ;;
+        esac
+    fi
+    if [[ "$HasExistAccount" == "" ]]; then
+        UseExistAccount=0
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        echo "Please provide your AppleID"
+        read AppleID
+        echo "Please provide the password of AppleID"
+        read password
+    fi
     
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    if [[ "$CheckAccount" == "" ]] ; then
+        echo "Do you want to save this Account ? [y/n]"
+        read ans
+        case "$ans" in
+        [yY][eE][sS]|[yY] )
+        echo "$Account" >> saved.txt
+        echo "saved"
+        ;;
+        [nN][oO]|[nN] )
+        ;;
+        esac
+    fi
+    PATH=./AltStore.ipa
+    
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
+    fi
+    exit
+    ;;
+    
+  2|--Install-ipa )
+  
     for job in `jobs -p`
     do
     wait $job
