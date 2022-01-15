@@ -106,21 +106,8 @@ while [ $RunScript = 0 ] ; do
         echo "Please provide the password of AppleID"
         read password
     fi
-    
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    if [[ "$CheckAccount" == "" ]] ; then
-        echo "Do you want to save this Account ? [y/n]"
-        read ans
-        case "$ans" in
-        [yY][eE][sS]|[yY] )
-        echo "$Account" >> saved.txt
-        echo "saved"
-        ;;
-        [nN][oO]|[nN] )
-        ;;
-        esac
-    fi
     PATH=./AltStore.ipa
     
     if [[ $UseExistAccount = 1 ]]; then
@@ -129,7 +116,12 @@ while [ $RunScript = 0 ] ; do
     if [[ $UseExistAccount = 0 ]]; then
         ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
     fi
-    exit
+    if [[ "$CheckAccount" == "" ]] ; then
+        RunScript=1
+    fi
+    if [[ "$CheckAccount" != "" ]] ; then
+        exit
+    fi
     ;;
     
   2|--Install-ipa )
@@ -179,30 +171,23 @@ while [ $RunScript = 0 ] ; do
         echo "Please provide the password of AppleID"
         read password
     fi
-    
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    if [[ "$CheckAccount" == "" ]] ; then
-        echo "Do you want to save this Account ? [y/n]"
-        read ans
-        case "$ans" in
-        [yY][eE][sS]|[yY] )
-        echo "$Account" >> saved.txt
-        echo "saved"
-        ;;
-        [nN][oO]|[nN] )
-        ;;
-        esac
-    fi
     PATH=./ipa/$Existipa
     
     if [[ $UseExistAccount = 1 ]]; then
         ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
+        exit
     fi
     if [[ $UseExistAccount = 0 ]]; then
         ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
     fi
-    exit
+    if [[ "$CheckAccount" == "" ]] ; then
+        RunScript=1
+    fi
+    if [[ "$CheckAccount" != "" ]] ; then
+        exit
+    fi
     ;;
     
     
@@ -216,11 +201,27 @@ while [ $RunScript = 0 ] ; do
     ./AltServerDaemon
     ;;
   e|--exit )
-    RunScript=1
+    exit
     ;;
   h|--help )
     cat help.txt
     ;;
     esac
 
+done
+
+
+while [ $RunScript = 1 ] ; do
+    echo "Do you want to save this Account ? [y/n]"
+    read ans
+    case "$ans" in
+    [yY][eE][sS]|[yY] )
+    echo "$Account" >> saved.txt
+    echo "saved"
+    exit
+    ;;
+    [nN][oO]|[nN] )
+    exit
+    ;;
+    esac
 done
