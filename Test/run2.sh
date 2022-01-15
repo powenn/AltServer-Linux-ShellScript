@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
