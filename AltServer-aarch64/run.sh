@@ -1,10 +1,9 @@
 #!/bin/bash
 
-set -x
 echo "Checking source"
 if [[ ! -e "./ipa/AltStore.ipa" ]]; then
     mkdir ipa
-    cd ipa && wget https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/AltStore.ipa
+    cd ipa && wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
     cd ..
 fi
 if [[ ! -e "ipa" ]]; then
@@ -16,6 +15,7 @@ fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
+
 
     cat << EOF >help.txt
     

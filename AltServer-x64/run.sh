@@ -1,10 +1,9 @@
 #!/bin/bash
 
-set -x
 echo "Checking source"
 if [[ ! -e "./ipa/AltStore.ipa" ]]; then
     mkdir ipa
-    cd ipa && wget https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/AltStore.ipa
+    cd ipa && wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
     cd ..
 fi
 if [[ ! -e "ipa" ]]; then
@@ -152,7 +151,7 @@ while [ $RunScript = 0 ] ; do
     done
 
     idevicepair pair
-    ./AltServer
+    ./AltServerDaemon
     ;;
   e|--exit )
     RunScript=1
