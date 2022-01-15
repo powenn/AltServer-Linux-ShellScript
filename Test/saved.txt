@@ -1,8 +1,2 @@
-dvdvdv,cxx
-grgr,scsc
-hgh,grg
-rfe,cdcdc
-df,ss
-grg,dff
-efef,dwdsd
-fefe,dsdsd
+j,j
+bbb,bbb

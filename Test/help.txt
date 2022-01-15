@@ -7,11 +7,9 @@ Usage: [OPTION]
 
 OPTIONS
 
-  1, --Install AltStore
-    Install AltStore to your device
-  2, --Install ipa
+  i, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
-  3, --Daemon mode
+  d, --Daemon mode
     Switch to Daemon mode to refresh apps or AltStore
   e, --exit
     Exit script

@@ -13,9 +13,7 @@ fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
-if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
-    chmod +x AltServerDaemon
-fi
+
 
 HasExistAccount=$(cat saved.txt)
 UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
@@ -107,15 +105,6 @@ while [ $RunScript = 0 ] ; do
     fi
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    PATH=./AltStore.ipa
-
-    if [[ $UseExistAccount = 1 ]]; then
-        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
-    fi
-    echo "Finished"
-    if [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
-    fi
     if [[ "$CheckAccount" == "" ]] ; then
         echo "Do you want to save this Account ? [y/n]"
         read ans
@@ -123,15 +112,20 @@ while [ $RunScript = 0 ] ; do
         [yY][eE][sS]|[yY] )
         echo "$Account" >> saved.txt
         echo "saved"
-        exit
         ;;
         [nN][oO]|[nN] )
-        exit
         ;;
         esac
     fi
+    PATH=./AltStore.ipa
+
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
+    fi
     exit
-    
     ;;
 
   2|--Install-ipa )
@@ -183,15 +177,6 @@ while [ $RunScript = 0 ] ; do
     
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    PATH=./ipa/$Existipa
-    
-    if [[ $UseExistAccount = 1 ]]; then
-        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
-    fi
-    if [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
-    fi
-    echo "Finished"
     if [[ "$CheckAccount" == "" ]] ; then
         echo "Do you want to save this Account ? [y/n]"
         read ans
@@ -199,12 +184,18 @@ while [ $RunScript = 0 ] ; do
         [yY][eE][sS]|[yY] )
         echo "$Account" >> saved.txt
         echo "saved"
-        exit
         ;;
         [nN][oO]|[nN] )
-        exit
         ;;
         esac
+    fi
+    PATH=./ipa/$Existipa
+    
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
     fi
     exit
     ;;
@@ -217,7 +208,7 @@ while [ $RunScript = 0 ] ; do
     done
 
     idevicepair pair
-    ./AltServerDaemon
+    ./AltServer
     ;;
   e|--exit )
     RunScript=1
