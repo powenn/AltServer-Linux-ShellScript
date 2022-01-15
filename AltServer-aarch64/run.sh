@@ -105,15 +105,6 @@ while [ $RunScript = 0 ] ; do
     fi
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    PATH=./AltStore.ipa
-
-    if [[ $UseExistAccount = 1 ]]; then
-        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
-    fi
-    echo "Finished"
-    if [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
-    fi
     if [[ "$CheckAccount" == "" ]] ; then
         echo "Do you want to save this Account ? [y/n]"
         read ans
@@ -121,15 +112,21 @@ while [ $RunScript = 0 ] ; do
         [yY][eE][sS]|[yY] )
         echo "$Account" >> saved.txt
         echo "saved"
-        exit
         ;;
         [nN][oO]|[nN] )
-        exit
         ;;
         esac
     fi
+    PATH=./AltStore.ipa
+
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
+    fi
+    echo "Finished"
     exit
-    
     ;;
 
   2|--Install-ipa )
@@ -181,6 +178,18 @@ while [ $RunScript = 0 ] ; do
     
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
+    if [[ "$CheckAccount" == "" ]] ; then
+        echo "Do you want to save this Account ? [y/n]"
+        read ans
+        case "$ans" in
+        [yY][eE][sS]|[yY] )
+        echo "$Account" >> saved.txt
+        echo "saved"
+        ;;
+        [nN][oO]|[nN] )
+        ;;
+        esac
+    fi
     PATH=./ipa/$Existipa
     
     if [[ $UseExistAccount = 1 ]]; then
@@ -189,21 +198,7 @@ while [ $RunScript = 0 ] ; do
     if [[ $UseExistAccount = 0 ]]; then
         ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
     fi
-    echo "Finished"
-    if [[ "$CheckAccount" == "" ]] ; then
-        echo "Do you want to save this Account ? [y/n]"
-        read ans
-        case "$ans" in
-        [yY][eE][sS]|[yY] )
-        echo "$Account" >> saved.txt
-        echo "saved"
-        exit
-        ;;
-        [nN][oO]|[nN] )
-        exit
-        ;;
-        esac
-    fi
+    echo "Finished"    
     exit
     ;;
     
