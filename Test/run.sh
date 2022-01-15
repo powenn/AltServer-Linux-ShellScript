@@ -13,6 +13,9 @@ fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
+if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
+    chmod +x AltServerDaemon
+fi
 
 HasExistAccount=$(cat saved.txt)
 UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
@@ -57,6 +60,9 @@ printf "\e[49m       \e[38;5;73;49m▄▄\e[38;5;66;49m▄\e[38;5;66;48;5;73m▄
 \e[49m       \e[49;38;5;66m▀▀\e[49;38;5;6m▀\e[38;5;66;48;5;6m▄▄▄▄▄▄▄▄\e[49;38;5;6m▀\e[49;38;5;66m▀▀\e[49m       \e[m
 ";
 cat help.txt
+echo "Please connect to your device and press Enter to continue"
+read key
+idevicepair pair
 
 RunScript=0
 while [ $RunScript = 0 ] ; do
@@ -70,8 +76,6 @@ while [ $RunScript = 0 ] ; do
     wait $job
     done
     echo "It will install AltStore to your device"
-    echo "Please connect to your device and press Enter to continue"
-    read key
     idevicepair pair
     
     if [[ "$HasExistAccount" != "" ]]; then
@@ -107,10 +111,11 @@ while [ $RunScript = 0 ] ; do
 
     if [[ $UseExistAccount = 1 ]]; then
         ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
-    elif [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
     fi
     echo "Finished"
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
+    fi
     if [[ "$CheckAccount" == "" ]] ; then
         echo "Do you want to save this Account ? [y/n]"
         read ans
@@ -124,9 +129,9 @@ while [ $RunScript = 0 ] ; do
         exit
         ;;
         esac
-    else
-        exit
     fi
+    exit
+    
     ;;
 
   2|--Install-ipa )
@@ -135,8 +140,6 @@ while [ $RunScript = 0 ] ; do
     wait $job
     done
 
-    echo "Please connect to your device and press Enter to continue"
-    read key
     idevicepair pair
     
     if [[ "$HasExistipa" != "" ]]; then
@@ -184,7 +187,8 @@ while [ $RunScript = 0 ] ; do
     
     if [[ $UseExistAccount = 1 ]]; then
         ./AltServer -u "${UDID}" -a "$ExistID" -p "$ExistPasswd" "$PATH"
-    elif [[ $UseExistAccount = 0 ]]; then
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
         ./AltServer -u "${UDID}" -a "$AppleID" -p "$password" "$PATH"
     fi
     echo "Finished"
@@ -201,9 +205,8 @@ while [ $RunScript = 0 ] ; do
         exit
         ;;
         esac
-    else
-        exit
     fi
+    exit
     ;;
     
     
@@ -213,10 +216,8 @@ while [ $RunScript = 0 ] ; do
     wait $job
     done
 
-    echo "Please connect to your device and press Enter to continue"
-    read key
     idevicepair pair
-    ./AltServer
+    ./AltServerDaemon
     ;;
   e|--exit )
     RunScript=1
