@@ -2,6 +2,7 @@
 # Author of the script : powen
 
 # Check source and permission
+cd "$(dirname "$0")"
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
