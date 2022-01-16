@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author of the script : powen
 
-# Check source and permission
+# Check source and give permission
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
@@ -16,13 +16,12 @@ if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
 
-#####
+# Check is saved account and ipa exist
 HasExistAccount=$(cat saved.txt)
 UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
 HasExistipa=$(ls ipa)
 
-
-# Instruction
+# Main instruct interface
 cat << EOF >help.txt
     
 #####################################
@@ -46,9 +45,7 @@ OPTIONS
     
 EOF
 
-# Print AltServer icon
-AltServerIcon() {
-    printf "\e[49m       \e[38;5;73;49m▄▄\e[38;5;66;49m▄\e[38;5;66;48;5;73m▄▄▄▄▄▄▄▄\e[38;5;66;49m▄\e[38;5;73;49m▄▄\e[49m       \e[m
+printf "\e[49m       \e[38;5;73;49m▄▄\e[38;5;66;49m▄\e[38;5;66;48;5;73m▄▄▄▄▄▄▄▄\e[38;5;66;49m▄\e[38;5;73;49m▄▄\e[49m       \e[m
 \e[49m     \e[38;5;73;49m▄\e[38;5;66;48;5;73m▄\e[38;5;66;48;5;66m▄▄▄▄▄▄\e[38;5;67;48;5;66m▄▄\e[38;5;66;48;5;66m▄▄▄▄▄▄\e[38;5;66;48;5;73m▄\e[38;5;73;49m▄\e[49m     \e[m
 \e[49m   \e[38;5;73;49m▄\e[38;5;30;48;5;73m▄\e[38;5;30;48;5;30m▄▄▄▄▄▄\e[38;5;109;48;5;73m▄\e[38;5;109;48;5;109m▄▄▄▄\e[38;5;109;48;5;73m▄\e[38;5;30;48;5;30m▄▄▄▄▄▄\e[38;5;30;48;5;73m▄\e[38;5;73;49m▄\e[49m   \e[m
 \e[49m \e[38;5;73;49m▄\e[38;5;30;48;5;73m▄\e[38;5;30;48;5;30m▄▄▄▄▄▄\e[38;5;73;48;5;30m▄\e[38;5;73;48;5;73m▄▄▄▄▄▄▄▄\e[38;5;73;48;5;30m▄\e[38;5;30;48;5;30m▄▄▄▄▄▄\e[38;5;30;48;5;73m▄\e[38;5;73;49m▄\e[49m \e[m
@@ -63,11 +60,27 @@ AltServerIcon() {
 \e[49m     \e[49;38;5;66m▀\e[38;5;66;48;5;6m▄\e[38;5;6;48;5;6m▄▄▄▄▄▄\e[38;5;6;48;5;30m▄▄\e[38;5;6;48;5;6m▄▄▄▄▄▄\e[38;5;66;48;5;6m▄\e[49;38;5;66m▀\e[49m     \e[m
 \e[49m       \e[49;38;5;66m▀▀\e[49;38;5;6m▀\e[38;5;66;48;5;6m▄▄▄▄▄▄▄▄\e[49;38;5;6m▀\e[49;38;5;66m▀▀\e[49m       \e[m
 ";
-}
+# Script start
+cat help.txt
+echo "Please connect to your device and press Enter to continue"
+read key
+idevicepair pair
 
-# Check if there exists saved account
-# Ask if want to use saved account
-Account() {
+RunScript=0
+while [ $RunScript = 0 ] ; do
+    echo "Enter OPTION to continue"
+    read option
+    case "$option" in
+    
+  1|--Install-ipa )
+  
+    for job in `jobs -p`
+    do
+    wait $job
+    done
+
+    idevicepair pair
+        
     if [[ "$HasExistAccount" != "" ]]; then
         echo "Do you want to use saved Account ? [y/n]"
         read reply
@@ -95,11 +108,10 @@ Account() {
         echo "Please provide the password of AppleID"
         read password
     fi
-}
-
-# Execute AltServer
-# Check if this account existed before
-AltServer() {
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    PATH=./AltStore.ipa
+    
     if [[ $UseExistAccount = 1 ]]; then
         ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
     fi
@@ -112,66 +124,6 @@ AltServer() {
     if [[ "$CheckAccount" != "" ]] ; then
         exit
     fi
-}
-
-# Check if there exists ipa files in ipa folder
-ipaCheck() {
-    if [[ "$HasExistipa" != "" ]]; then
-        echo "Please provide the number of ipa "
-        echo "$HasExistipa" > ipaList.txt
-        nl ipaList.txt
-        read ipanumber
-        Existipa=$(sed -n "$ipanumber"p ipaList.txt )
-    else
-        echo "There is no ipa filess in ipa folder "
-        exit
-    fi
-}
-
-# Ask to save the new account
-SaveAcccount() {
-    echo "Do you want to save this Account ? [y/n]"
-    read ans
-    case "$ans" in
-    [yY][eE][sS]|[yY] )
-    echo "$Account" >> saved.txt
-    echo "saved"
-    exit
-    ;;
-    [nN][oO]|[nN] )
-    exit
-    ;;
-    esac
-}
-
-# Start script
-AltServerIcon
-cat help.txt
-echo "Please connect to your device and press Enter to continue"
-read key
-idevicepair pair
-
-RunScript=0
-while [ $RunScript = 0 ] ; do
-    echo "Enter OPTION to continue"
-    read option
-    case "$option" in
-    
-  1|--Install-ipa )
-  
-    for job in `jobs -p`
-    do
-    wait $job
-    done
-
-    idevicepair pair
-    Account
-    
-    Account=$AppleID,$password
-    CheckAccount=$(grep $Account saved.txt)
-    PATH=./AltStore.ipa
-    
-    AltServer
     ;;
     
   2|--Install-ipa )
@@ -182,16 +134,65 @@ while [ $RunScript = 0 ] ; do
     done
 
     idevicepair pair
-    ipaCheck
-    Account
-
+    
+    if [[ "$HasExistipa" != "" ]]; then
+        echo "Please provide the number of ipa "
+        echo "$HasExistipa" > ipaList.txt
+        nl ipaList.txt
+        read ipanumber
+        Existipa=$(sed -n "$ipanumber"p ipaList.txt )
+    else
+        echo "There is no ipa filess in ipa folder "
+        exit
+    fi
+    
+    if [[ "$HasExistAccount" != "" ]]; then
+        echo "Do you want to use saved Account ? [y/n]"
+        read reply
+        case "$reply" in
+        [yY][eE][sS]|[yY] )
+        echo "Which account you want to use ? "
+        UseExistAccount=1
+        nl saved.txt
+        echo "please enter the number "
+        read number
+        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
+        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
+        ;;
+        [nN][oO]|[nN] )
+        UseExistAccount=0
+        ;;
+        esac
+    fi
+    if [[ "$HasExistAccount" == "" ]]; then
+        UseExistAccount=0
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        echo "Please provide your AppleID"
+        read AppleID
+        echo "Please provide the password of AppleID"
+        read password
+    fi
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
     PATH=./ipa/$Existipa
     
-    AltServer
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
+        exit
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
+    fi
+    if [[ "$CheckAccount" == "" ]] ; then
+        RunScript=1
+    fi
+    if [[ "$CheckAccount" != "" ]] ; then
+        exit
+    fi
     ;;
-        
+    
+    
   d|--Daemon-mode )
     for job in `jobs -p`
     do
@@ -205,13 +206,24 @@ while [ $RunScript = 0 ] ; do
     exit
     ;;
   h|--help )
-    AltServerIcon
     cat help.txt
     ;;
     esac
 
 done
 
+
 while [ $RunScript = 1 ] ; do
-    SaveAcccount
+    echo "Do you want to save this Account ? [y/n]"
+    read ans
+    case "$ans" in
+    [yY][eE][sS]|[yY] )
+    echo "$Account" >> saved.txt
+    echo "saved"
+    exit
+    ;;
+    [nN][oO]|[nN] )
+    exit
+    ;;
+    esac
 done
