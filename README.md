@@ -10,10 +10,16 @@ AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
 Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux project 
 
-## Note 
-AltStore installation avaliable,run with `./install.sh`
+## Features (now avaliable in pre-release)
+- account saving
+- enter number to select and use saved account
+- enter number to select ipa
+- only need one command to use the script `./run.sh`
 
-And you can refresh apps with AltServer in daemon mode,run `./daemon.sh`
+
+## Note 
+
+Just run `./run.sh` and follow the instruction
 
 ***Not work on every linux distribution and architectures,report issues to [issues](https://github.com/powenn/AltServer-Linux-ShellScript/issues)***
 
@@ -22,8 +28,6 @@ And you can refresh apps with AltServer in daemon mode,run `./daemon.sh`
 ## Get start
 
 Get the release which support your device architecture
-
-run `./setup.sh`
 
 You need idevicemobile
 
@@ -34,7 +38,10 @@ sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 
 Please storage your ipa files into AltServer/ipa
 
-To install your ipa ,just run `./start.sh` and follow the instruction
+`cd` to the folder which contain run.sh
+
+run `./run.sh` to start
+
 ![photo][1]
 ![photo][2]
 ![photo][3]
