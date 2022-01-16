@@ -67,7 +67,7 @@ AltServerIcon() {
 
 # Check if there exists saved account
 # Ask if want to use saved account
-Account() {
+AskAccount() {
     if [[ "$HasExistAccount" != "" ]]; then
         echo "Do you want to use saved Account ? [y/n]"
         read reply
@@ -165,7 +165,7 @@ while [ $RunScript = 0 ] ; do
     done
 
     idevicepair pair
-    Account
+    AskAccount
     
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
@@ -183,7 +183,7 @@ while [ $RunScript = 0 ] ; do
 
     idevicepair pair
     ipaCheck
-    Account
+    AskAccount
 
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
