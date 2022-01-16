@@ -38,8 +38,6 @@ sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 
 Please storage your ipa files into AltServer/ipa
 
-`cd` to the folder which contain run.sh
-
 run `./run.sh` to start
 
 ![photo][1]
