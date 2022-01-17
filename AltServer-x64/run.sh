@@ -30,24 +30,24 @@ HasExistipa=$(ls ipa)
 cat << EOF >help.txt
     
 #####################################
-#  Welcome to the AltServer script  #
+#  歡迎到AltServer腳本  #
 #####################################
 
-Usage: [OPTION]
+用法: [選項]
 
-OPTIONS
+選項
 
   1, --Install AltStore
-    Install AltStore to your device
+    下載AltStore到你的裝置中
   2, --Install ipa
-    Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
+    從「ipa」資料夾內下載ipa檔，在執行此指令前請確定已經在「ipa」資料夾內放置任何ipa檔案
   d, --Daemon mode
-    Switch to Daemon mode to refresh apps or AltStore
+    切換到守護進程模式已在AltStore上重簽或下載ipa檔
   e, --exit
-    Exit script
+    退出
   h, --help
-    Show this message
-    
+    顯示此訊息
+     
 EOF
 
 # Print AltServer icon
@@ -73,14 +73,14 @@ AltServerIcon() {
 # Ask if want to use saved account
 AskAccount() {
     if [[ "$HasExistAccount" != "" ]]; then
-        echo "Do you want to use saved Account ? [y/n]"
+        echo "你想要使用已儲存的帳號嗎 ? [y/n]"
         read reply
         case "$reply" in
         [yY][eE][sS]|[yY] )
-        echo "Which account you want to use ? "
+        echo "請選擇帳號 "
         UseExistAccount=1
         nl saved.txt
-        echo "please enter the number "
+        echo "請輸入編號 "
         read number
         ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
         ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
@@ -94,9 +94,9 @@ AskAccount() {
         UseExistAccount=0
     fi
     if [[ $UseExistAccount = 0 ]]; then
-        echo "Please provide your AppleID"
+        echo "請輸入Apple ID"
         read AppleID
-        echo "Please provide the password of AppleID"
+        echo "請輸入密碼"
         read password
     fi
 }
@@ -121,25 +121,25 @@ AltServer() {
 # Check if there exists ipa files in ipa folder
 ipaCheck() {
     if [[ "$HasExistipa" != "" ]]; then
-        echo "Please provide the number of ipa "
+        echo "請輸入ipa的編號 "
         echo "$HasExistipa" > ipaList.txt
         nl ipaList.txt
         read ipanumber
         Existipa=$(sed -n "$ipanumber"p ipaList.txt )
     else
-        echo "There is no ipa filess in ipa folder "
+        echo "在「ipa」資料夾內沒有任何ipa檔 "
         exit
     fi
 }
 
 # Ask to save the new account
 SaveAcccount() {
-    echo "Do you want to save this Account ? [y/n]"
+    echo "你要儲存此帳號嗎 ? [y/n]"
     read ans
     case "$ans" in
     [yY][eE][sS]|[yY] )
     echo "$Account" >> saved.txt
-    echo "saved"
+    echo "已儲存"
     exit
     ;;
     [nN][oO]|[nN] )
@@ -151,13 +151,13 @@ SaveAcccount() {
 # Start script
 AltServerIcon
 cat help.txt
-echo "Please connect to your device and press Enter to continue"
+echo "請連接裝置到電腦"
 read key
 idevicepair pair
 
 RunScript=0
 while [ $RunScript = 0 ] ; do
-    echo "Enter OPTION to continue"
+    echo "請輸入選項以繼續"
     read option
     case "$option" in
     
