@@ -116,6 +116,7 @@ AltServer() {
 }
 
 # Check if there exists ipa files in ipa folder
+# Ask which ipa want to install
 ipaCheck() {
     if [[ "$HasExistipa" != "" ]]; then
         echo "Please provide the number of ipa "
