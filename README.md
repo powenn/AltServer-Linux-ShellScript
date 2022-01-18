@@ -10,6 +10,8 @@ AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
 
 Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux project 
 
+![photo][4]
+
 ## Features (now avaliable in pre-release)
 - account saving
 - enter number to select and use saved account
@@ -23,7 +25,6 @@ Just run `./run.sh` and follow the instruction
 
 ***Not work on every linux distribution and architectures,report issues to [issues](https://github.com/powenn/AltServer-Linux-ShellScript/issues)***
 
-![photo][0]
 
 ## Get start
 
@@ -40,6 +41,7 @@ Please storage your ipa files into AltServer/ipa
 
 run `./run.sh` to start
 
+![photo][0]
 ![photo][1]
 ![photo][2]
 ![photo][3]
@@ -66,3 +68,4 @@ run `./run.sh` to start
 [1]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/01.jpg
 [2]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/02.jpg
 [3]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/03.jpg
+[4]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/04.jpg
