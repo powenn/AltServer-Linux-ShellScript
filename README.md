@@ -68,4 +68,4 @@ run `./run.sh` to start
 [1]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/01.jpg
 [2]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/02.jpg
 [3]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/03.jpg
-[4]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/04.jpg
+[4]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/04.png
