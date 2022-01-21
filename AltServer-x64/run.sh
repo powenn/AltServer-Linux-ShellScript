@@ -2,7 +2,6 @@
 # Author of the script : powen
 
 # Check source and permission
-cd "$(dirname "$0")"
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
@@ -41,8 +40,8 @@ OPTIONS
     Install AltStore to your device
   2, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
-  d, --Daemon mode
-    Switch to Daemon mode to refresh apps or AltStore
+  d, --Restart-Daemon-mode 
+    Restart Daemon mode to refresh apps or AltStore
   e, --exit
     Exit script
   h, --help
@@ -71,7 +70,7 @@ AltServerIcon() {
 
 # Check if there exists saved account
 # Ask if want to use saved account
-AskAccount() {
+Account() {
     if [[ "$HasExistAccount" != "" ]]; then
         echo "Do you want to use saved Account ? [y/n]"
         read reply
@@ -119,7 +118,6 @@ AltServer() {
 }
 
 # Check if there exists ipa files in ipa folder
-# Ask which ipa want to install
 ipaCheck() {
     if [[ "$HasExistipa" != "" ]]; then
         echo "Please provide the number of ipa "
@@ -154,7 +152,8 @@ AltServerIcon
 cat help.txt
 echo "Please connect to your device and press Enter to continue"
 read key
-idevicepair pair
+idevicepair pair > /dev/null
+./AltServerDaemon &> /dev/null &
 
 RunScript=0
 while [ $RunScript = 0 ] ; do
@@ -163,14 +162,14 @@ while [ $RunScript = 0 ] ; do
     case "$option" in
     
   1|--Install-ipa )
-  
+    killall AltServerDaemon 
     for job in `jobs -p`
     do
     wait $job
     done
 
     idevicepair pair
-    AskAccount
+    Account
     
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
@@ -180,7 +179,7 @@ while [ $RunScript = 0 ] ; do
     ;;
     
   2|--Install-ipa )
-  
+    killall AltServerDaemon 
     for job in `jobs -p`
     do
     wait $job
@@ -188,7 +187,7 @@ while [ $RunScript = 0 ] ; do
 
     idevicepair pair
     ipaCheck
-    AskAccount
+    Account
 
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
@@ -197,14 +196,15 @@ while [ $RunScript = 0 ] ; do
     AltServer
     ;;
         
-  d|--Daemon-mode )
+  d|--Restart-Daemon-mode )
+    killall AltServerDaemon 
     for job in `jobs -p`
     do
     wait $job
     done
 
     idevicepair pair
-    ./AltServerDaemon
+    ./AltServerDaemon &> /dev/null &
     ;;
   e|--exit )
     exit
