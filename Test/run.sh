@@ -38,8 +38,8 @@ OPTIONS
     Install AltStore to your device
   2, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
-  d, --Daemon mode
-    Switch to Daemon mode to refresh apps or AltStore
+  d, --Restart Daemon mode
+    Restart Daemon mode to refresh apps or AltStore
   e, --exit
     Exit script
   h, --help
@@ -116,6 +116,7 @@ AltServer() {
 }
 
 # Check if there exists ipa files in ipa folder
+# Ask which ipa want to install
 ipaCheck() {
     if [[ "$HasExistipa" != "" ]]; then
         echo "Please provide the number of ipa "
@@ -150,7 +151,8 @@ AltServerIcon
 cat help.txt
 echo "Please connect to your device and press Enter to continue"
 read key
-idevicepair pair
+idevicepair pair > /dev/null
+./AltServer &> /dev/null &
 
 RunScript=0
 while [ $RunScript = 0 ] ; do
@@ -159,7 +161,7 @@ while [ $RunScript = 0 ] ; do
     case "$option" in
     
   1|--Install-ipa )
-  
+    killall AltServer
     for job in `jobs -p`
     do
     wait $job
@@ -176,7 +178,7 @@ while [ $RunScript = 0 ] ; do
     ;;
     
   2|--Install-ipa )
-  
+    killall AltServer
     for job in `jobs -p`
     do
     wait $job
@@ -193,14 +195,15 @@ while [ $RunScript = 0 ] ; do
     AltServer
     ;;
         
-  d|--Daemon-mode )
+  d|--Restart-Daemon-mode )
+    killall AltServer
     for job in `jobs -p`
     do
     wait $job
     done
 
     idevicepair pair
-    ./AltServer
+    ./AltServer &> /dev/null &
     ;;
   e|--exit )
     exit
