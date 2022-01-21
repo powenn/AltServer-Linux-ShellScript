@@ -48,7 +48,7 @@ run `./run.sh` to start
 ## Latest Video
 
 <a href="https://www.youtube.com/watch?v=YoQqZ3Xhn-w">
-  <img src="https://img.youtube.com/vi/YoQqZ3Xhn-w/hqdefault.jpg" >
+  <img src="https://img.youtube.com/vi/YoQqZ3Xhn-w/maxresdefault.jpg" >
 </a>
 
 ### Video(install AltStore)
