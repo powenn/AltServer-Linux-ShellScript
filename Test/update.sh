@@ -12,13 +12,17 @@ if [[ $LatestVersion != $LocalVersion ]] ; then
     unzip -o AltServer-$Arch.zip
     rm -rf AltServer-$Arch.zip
     cd "$(dirname "$0")"
-    chmod +x run.sh
-    find *AltServer* | xargs chmod +x
+    chmod +x *.sh
     echo "Done"
 elif [[ $LatestVersion = $LocalVersion ]] ; then
     echo "you are using latest release"
 fi
-
+if [[ -e "AltServer" ]]; then
+    chmod +x AltServer
+fi
+if [[ -e "AltServerDaemon" ]]; then
+    chmod +x AltServerDaemon
+fi
   cat << EOF
 
 What updated in version $LatestVersion ?
