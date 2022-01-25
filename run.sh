@@ -40,10 +40,12 @@ OPTIONS
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   d, --Restart Daemon mode
     Restart Daemon mode to refresh apps or AltStore
-  e, --exit
+  e, --Exit
     Exit script
-  h, --help
+  h, --Help
     Show this message
+  u, --Update
+    Update this script or AltServer
     
 EOF
 
@@ -160,7 +162,7 @@ while [ $RunScript = 0 ] ; do
     read option
     case "$option" in
     
-  1|--Install-ipa )
+  1|--Install-AltStore )
     killall AltServer
     for job in `jobs -p`
     do
@@ -205,12 +207,16 @@ while [ $RunScript = 0 ] ; do
     idevicepair pair
     ./AltServer &> /dev/null &
     ;;
-  e|--exit )
+  e|--Exit )
+    killall AltServer
     exit
     ;;
-  h|--help )
+  h|--Help )
     AltServerIcon
     cat help.txt
+    ;;
+  u|--Update )
+    curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/update.sh' | sh
     ;;
     esac
 
