@@ -12,7 +12,7 @@ if [[ $LatestVersion != $LocalVersion ]] ; then
     unzip -o AltServer-$Arch.zip
     rm -rf AltServer-$Arch.zip
     cd "$(dirname "$0")"
-    chmod +x *.sh
+    chmod +x run.sh
     find *AltServer* | xargs chmod +x
     echo "Done"
 elif [[ $LatestVersion = $LocalVersion ]] ; then
