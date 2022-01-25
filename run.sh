@@ -1,11 +1,20 @@
 #!/bin/bash
-# Author of the script : powen
+# Author of the script : powen, olivertzeng
 
 # Check source and permission
 cd "$(dirname "$0")"
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
+fi
+if [[ ! -e "unc0ver_Release_8.0.2.ipa" ]]; then
+    wget https://unc0ver.dev/downloads/8.0.2/9e44edfbfd1905cadf23c3b9ad1d5bed683ce061/unc0ver_Release_8.0.2.ipa
+fi
+if [[ ! -e "1.6.4-12.2-12.5.ipa" ]]; then
+    wget https://github.com/coolstar/electra-ipas/raw/master/chimera/1.6.4-12.2-12.5.ipa
+fi
+if [[ ! -e "Taurine-1.1.1.ipa" ]]; then
+    wget https://github.com/Odyssey-Team/Taurine/releases/download/1.1.1/Taurine-1.1.1.ipa
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
@@ -15,6 +24,9 @@ if [[ ! -e "saved.txt" ]]; then
 fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
+fi
+if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
+    chmod +x AltServerDaemon
 fi
 
 #####
@@ -34,8 +46,14 @@ Usage: [OPTION]
 
 OPTIONS
 
-  1, --Install AltStore
+  a, --Install-AltStore
     Install AltStore to your device
+  u, --Install-unc0ver
+    Install unc0ver to your device iOS11.0~14.8
+  c, --Install-Chimera
+    Install Chimera to your device iOS12.2~12.5.5
+  t, --Install-Taurine
+    Install Taurine to your device iOS14.0~14.3 
   2, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   d, --Restart Daemon mode
@@ -160,8 +178,8 @@ while [ $RunScript = 0 ] ; do
     read option
     case "$option" in
     
-  1|--Install-ipa )
-    killall AltServer
+  a|--Install-AltStore )
+  
     for job in `jobs -p`
     do
     wait $job
@@ -177,8 +195,59 @@ while [ $RunScript = 0 ] ; do
     AltServer
     ;;
     
-  2|--Install-ipa )
-    killall AltServer
+  u|--Install-unc0ver )
+  
+    for job in `jobs -p`
+    do
+    wait $job
+    done
+
+    idevicepair pair
+    AskAccount
+    
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    PATH=./unc0ver_Release_8.0.2.ipa
+    
+    AltServer
+    ;;
+   
+  c|--Install-Chimera )
+  
+    for job in `jobs -p`
+    do
+    wait $job
+    done
+
+    idevicepair pair
+    AskAccount
+    
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    PATH=./1.6.4-12.2-12.5.ipa
+    
+    AltServer
+    ;;
+     
+  t|--Install-Taurine )
+  
+    for job in `jobs -p`
+    do
+    wait $job
+    done
+
+    idevicepair pair
+    AskAccount
+    
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    PATH=./Taurine-1.1.1.ipa
+    
+    AltServer
+    ;;
+  
+  i|--Install-ipa )
+  
     for job in `jobs -p`
     do
     wait $job
@@ -195,15 +264,14 @@ while [ $RunScript = 0 ] ; do
     AltServer
     ;;
         
-  d|--Restart-Daemon-mode )
-    killall AltServer
+  d|--Daemon-mode )
     for job in `jobs -p`
     do
     wait $job
     done
 
     idevicepair pair
-    ./AltServer &> /dev/null &
+    ./AltServerDaemon
     ;;
   e|--exit )
     exit
