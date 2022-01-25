@@ -1,11 +1,17 @@
 #!/bin/bash
-# Author of the script : powen
+# Author of the script : powen, olivertzeng
 
 # Check source and permission
 cd "$(dirname "$0")"
 echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
+fi
+if [[ ! -e "AltServer" ]]; then
+    wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServer-x64/AltServer
+fi
+if [[ ! -e "AltServerDaemon" ]]; then
+    wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltServer-x64/AltServerDaemon
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
@@ -14,10 +20,10 @@ if [[ ! -e "saved.txt" ]]; then
     touch saved.txt
 fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
-    chmod +x AltServer
+    chmod 777 AltServer
 fi
 if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
-    chmod +x AltServerDaemon
+    chmod 777 AltServerDaemon
 fi
 
 #####
@@ -37,9 +43,9 @@ Usage: [OPTION]
 
 OPTIONS
 
-  1, --Install AltStore
+  a, --Install AltStore
     Install AltStore to your device
-  2, --Install ipa
+  i, --Install ipa
     Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
   d, --Restart Daemon mode
     Restart Daemon mode to refresh apps or AltStore
@@ -75,14 +81,14 @@ AltServerIcon() {
 # Ask if want to use saved account
 AskAccount() {
     if [[ "$HasExistAccount" != "" ]]; then
-        echo "Do you want to use saved Account ? [y/n]"
+        printf "Do you want to use saved Account ? [y/n]"
         read reply
         case "$reply" in
         [yY][eE][sS]|[yY] )
         echo "Which account you want to use ? "
         UseExistAccount=1
-        nl saved.txt
-        echo "please enter the number "
+        nl saved.txt | cut -d , -f 1
+        printf "please enter the number: "
         read number
         ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
         ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
@@ -96,10 +102,20 @@ AskAccount() {
         UseExistAccount=0
     fi
     if [[ $UseExistAccount = 0 ]]; then
-        echo "Please provide your AppleID"
+        printf "Please provide your AppleID: "
         read AppleID
-        echo "Please provide the password of AppleID"
-        read password
+        printf "Please provide the password of AppleID: "
+        password=''
+        while IFS= read -r -s -n1 char; do
+                [[ -z $char ]] && { printf '\n'; break; } # ENTER pressed; output \n and break.
+                if [[ $char == $'\x7f' ]]; then # backspace was pressed
+                        # Remove last char from output variable.
+                        [[ -n $password ]] && password=${password%?}
+                        # Erase '*' to the left.
+                        printf '\b \b'
+                else
+                        # Add typed char to output variable.
+                        password+=$char
     fi
 }
 
@@ -124,7 +140,7 @@ AltServer() {
 # Ask which ipa want to install
 ipaCheck() {
     if [[ "$HasExistipa" != "" ]]; then
-        echo "Please provide the number of ipa "
+        printf "Please provide the number of ipa: "
         echo "$HasExistipa" > ipaList.txt
         nl ipaList.txt
         read ipanumber
@@ -137,7 +153,7 @@ ipaCheck() {
 
 # Ask to save the new account
 SaveAcccount() {
-    echo "Do you want to save this Account ? [y/n]"
+    printf "Do you want to save this Account ? [y/n]"
     read ans
     case "$ans" in
     [yY][eE][sS]|[yY] )
