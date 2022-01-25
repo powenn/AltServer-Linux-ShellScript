@@ -216,7 +216,7 @@ while [ $RunScript = 0 ] ; do
     cat help.txt
     ;;
   u|--Update )
-    curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/update.sh' | sh
+    curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/update.sh' | bash
     chmod +x *.sh
     if [[ -e "AltServer" ]]; then
         chmod +x AltServer
