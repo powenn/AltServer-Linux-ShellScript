@@ -13,6 +13,7 @@ if [[ $LatestVersion != $LocalVersion ]] ; then
     rm -rf AltServer-$Arch.zip
     cd "$(dirname "$0")"
     chmod +x *.sh
+    find *AltServer* | xargs chmod +x
     echo "Done"
 elif [[ $LatestVersion = $LocalVersion ]] ; then
     echo "you are using latest release"
