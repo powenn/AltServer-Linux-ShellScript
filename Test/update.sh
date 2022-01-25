@@ -11,18 +11,9 @@ if [[ $LatestVersion != $LocalVersion ]] ; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/releases/download/$LatestVersion/AltServer-$Arch.zip
     unzip -o AltServer-$Arch.zip
     rm -rf AltServer-$Arch.zip
-    cd "$(dirname "$0")"
-    chmod +x *.sh
-    if [[ -e "AltServer" ]]; then
-        chmod +x AltServer
-    fi
-    if [[ -e "AltServerDaemon" ]]; then
-        chmod +x AltServerDaemon
-    fi
-    
     echo "Done"
 elif [[ $LatestVersion = $LocalVersion ]] ; then
-    echo "you are using latest release"
+    echo "you are using the latest release"
 fi
 
   cat << EOF
