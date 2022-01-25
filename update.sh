@@ -20,7 +20,7 @@ fi
 
   cat << EOF
 
-What's new ?
+What updated in version $LatestVersion ?
   Script:
     - Added update option
     - daemon mode improved
