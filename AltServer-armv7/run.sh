@@ -21,6 +21,8 @@ fi
 HasExistAccount=$(cat saved.txt)
 UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
 HasExistipa=$(ls ipa)
+LocalVersion=$(sed -n 1p version)
+LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/version')
 
 
 # Instruction
@@ -148,9 +150,21 @@ SaveAcccount() {
     esac
 }
 
+# Show update avaliable message
+UpdateNotification() {
+if [[ $LatestVersion > $LocalVersion ]] ; then
+cat << EOF
+
+-------<< UPDATE AVALIABLE >>-------
+
+EOF
+fi
+}
+
 # Start script
 AltServerIcon
 cat help.txt
+UpdateNotification
 echo "Please connect to your device and press Enter to continue"
 read key
 idevicepair pair > /dev/null
