@@ -21,6 +21,7 @@ What updated in version $LatestVersion ?
     - Added update notification
     - Improved update option
 EOF
-elif [[ $LatestVersion = $LocalVersion ]] ; then
+fi
+if [[ $LatestVersion = $LocalVersion ]] ; then
     echo "you are using the latest release"
 fi
