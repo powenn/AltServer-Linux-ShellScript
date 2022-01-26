@@ -2,6 +2,8 @@
 # Author of the script : powen
 
 cd "$(dirname "$0")"
+rm -rf AltStore.ipa
+wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
 
 LocalVersion=$(sed -n 1p version)
 LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/version')
