@@ -13,13 +13,21 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
     unzip -o AltServer-$Arch.zip
     cp -R ./AltServer-$Arch/* $DIR
     rm -rf AltServer-$Arch.zip AltServer-$Arch
+    chmod +x *.sh
+    if [[ -e "AltServer" ]]; then
+        chmod +x AltServer
+    fi
+    if [[ -e "AltServerDaemon" ]]; then
+        chmod +x AltServerDaemon
+    fi
     echo "Done"
   cat << EOF
 
 What updated in version $LatestVersion ?
   Script:
-    - Added update notification
+    - Improved update notification
     - Improved update option
+<< PLease rerun the script to apply the new version >>
 EOF
 fi
 if [[ $LatestVersion = $LocalVersion ]] ; then

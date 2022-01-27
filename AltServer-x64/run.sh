@@ -231,16 +231,10 @@ while [ $RunScript = 0 ] ; do
   h|--Help )
     AltServerIcon
     cat help.txt
+    UpdateNotification
     ;;
   u|--Update )
     curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/update.sh' | bash
-    chmod +x *.sh
-    if [[ -e "AltServer" ]]; then
-        chmod +x AltServer
-    fi
-    if [[ -e "AltServerDaemon" ]]; then
-        chmod +x AltServerDaemon
-    fi
     ;;
     esac
 
