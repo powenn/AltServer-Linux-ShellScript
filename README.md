@@ -18,6 +18,7 @@ Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux pr
 - enter number to select ipa
 - only need one command to use the script `./run.sh`
 - Daemon mode will start automatically after device connected and press Enter
+- Update option and update notification
 
 ## Note 
 
