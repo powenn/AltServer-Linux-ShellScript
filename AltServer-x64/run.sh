@@ -99,9 +99,25 @@ AskAccount() {
     fi
     if [[ $UseExistAccount = 0 ]]; then
         echo "Please provide your AppleID"
+        printf "Apple ID: "
         read AppleID
-        echo "Please provide the password of AppleID"
-        read password
+        echo "Please provide the password for $AppleID"
+        printf "Password: "
+        password=''
+        while IFS= read -r -s -n1 char; do
+                [[ -z $char ]] && { printf '\n'; break; } # ENTER pressed; output \n and break.
+                if [[ $char == $'\x7f' ]]; then # backspace was pressed
+                        # Remove last char from output variable.
+                        [[ -n $password ]] && password=${password%?}
+                        # Erase '*' to the left.
+                        printf '\b \b'
+                else
+                        # Add typed char to output variable.
+                        password+=$char
+                        # Print '*' in its stead.
+                        printf '*'
+                fi
+        done
     fi
 }
 
