@@ -25,8 +25,9 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 
 What updated in version $LatestVersion ?
   Script:
-    - Improved update notification
-    - Improved update option
+    - Fix loop issue, now you can stay at the script after install AltStore or ipa
+    - Daemon mode will keep running in background,so you can sign in after install Altstore
+    - Merged 1 and 2 option into "i" option,in i option, you can select install AltStore or ipa or back to AltServer Script
 << PLease rerun the script to apply the new version >>
 EOF
 fi
