@@ -1,0 +1,145 @@
+#!/bin/bash
+# Author of the script : powen
+
+HasExistAccount=$(cat saved.txt)
+HasExistipa=$(ls ipa)
+UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
+
+cd "$(dirname "$0")"
+# Check if there exists saved account
+# Ask if want to use saved account
+AskAccount() {
+    if [[ "$HasExistAccount" != "" ]]; then
+        echo "Do you want to use saved Account ? [y/n]"
+        read reply
+        case "$reply" in
+        [yY][eE][sS]|[yY] )
+        echo "Which account you want to use ? "
+        UseExistAccount=1
+        nl saved.txt
+        echo "please enter the number "
+        read number
+        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
+        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
+        ;;
+        [nN][oO]|[nN] )
+        UseExistAccount=0
+        ;;
+        esac
+    fi
+    if [[ "$HasExistAccount" == "" ]]; then
+        UseExistAccount=0
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        echo "Please provide your AppleID"
+        read AppleID
+        echo "Please provide the password of AppleID"
+        read password
+    fi
+}
+
+# Execute AltServer
+# Check if this account existed before
+AltServer() {
+    if [[ $UseExistAccount = 1 ]]; then
+        ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
+    fi
+    if [[ $UseExistAccount = 0 ]]; then
+        ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
+    fi
+    if [[ "$CheckAccount" == "" ]] ; then
+        AccountSaving=1
+    fi
+}
+
+# Check if there exists ipa files in ipa folder
+# Ask which ipa want to install
+ipaCheck() {
+    if [[ "$HasExistipa" != "" ]]; then
+        echo "Please provide the number of ipa "
+        echo "$HasExistipa" > ipaList.txt
+        nl ipaList.txt
+        read ipanumber
+        Existipa=$(sed -n "$ipanumber"p ipaList.txt )
+    else
+        echo "There is no ipa filess in ipa folder "
+        NoIpaFile=1
+    fi
+}
+
+# Ask to save the new account
+SaveAcccount() {
+    echo "Do you want to save this Account ? [y/n]"
+    read ans
+    case "$ans" in
+    [yY][eE][sS]|[yY] )
+    echo "$Account" >> saved.txt
+    echo "saved"
+    ;;
+    [nN][oO]|[nN] )
+    ;;
+    esac
+}
+
+# Start Script Main
+idevicepair pair
+RunScriptMain=0
+while [ $RunScriptMain = 0 ] ; do
+cat << EOF
+
+----------------------
+InstallUsage: [OPTION]
+
+OPTIONS
+
+  1, --Install AltStore
+    Install AltStore to your device
+  2, --Install ipa files
+    Install ipa files to your device
+  b, --Back
+    Back to previous script
+EOF
+
+    echo "Enter OPTION to continue"
+    read option
+    case "$option" in
+    
+  1|--Install-AltStore )
+    mainScript=1
+    RunScriptMain=1
+    ;;
+        
+  2|--Install-ipa-files )
+    mainScript=2
+    RunScriptMain=1
+    ;;
+  b|--Back )
+    RunScriptMain=1
+    ;;
+    esac
+done
+if [[ $mainScript = 1 ]] ; then
+    AskAccount
+    Account=$AppleID,$password
+    CheckAccount=$(grep $Account saved.txt)
+    PATH=./AltStore.ipa
+    AltServer
+fi
+if [[ $mainScript = 2 ]] ; then
+    ipaCheck
+    if [[ $NoIpaFile != 1 ]] ; then
+        AskAccount
+        Account=$AppleID,$password
+        CheckAccount=$(grep $Account saved.txt)
+        PATH=./ipa/$Existipa
+        AltServer
+    fi
+fi
+if [[ $AccountSaving = 1 ]] ; then
+    SaveAcccount
+fi
+
+
+echo "<<  Done  >>"
+echo "Back to AltServer script"
+

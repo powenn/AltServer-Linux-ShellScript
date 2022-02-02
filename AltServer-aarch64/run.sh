@@ -7,20 +7,23 @@ echo "Checking source"
 if [[ ! -e "AltStore.ipa" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
 fi
+if [[ ! -e "main" ]]; then
+    wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
+fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
 fi
 if [[ ! -e "saved.txt" ]]; then
     touch saved.txt
 fi
+if [[ "stat main | grep -rw-r--r--" != "" ]] ; then
+    chmod +x main
+fi
 if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
     chmod +x AltServer
 fi
 
-#####
-HasExistAccount=$(cat saved.txt)
-UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
-HasExistipa=$(ls ipa)
+# Version
 LocalVersion=$(sed -n 1p version)
 LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/version')
 
@@ -32,14 +35,12 @@ cat << EOF >help.txt
 #  Welcome to the AltServer script  #
 #####################################
 
-Usage: [OPTION]
+ScriptUsage: [OPTION]
 
 OPTIONS
 
-  1, --Install AltStore
-    Install AltStore to your device
-  2, --Install ipa
-    Install ipa in Folder 'ipa',make sure you have put ipa files in the Folder before run this
+  i, --Install AltStore or ipa files
+    Install AltStore or ipa files to your device
   d, --Restart Daemon mode
     Restart Daemon mode to refresh apps or AltStore
   e, --Exit
@@ -70,86 +71,6 @@ AltServerIcon() {
 ";
 }
 
-# Check if there exists saved account
-# Ask if want to use saved account
-AskAccount() {
-    if [[ "$HasExistAccount" != "" ]]; then
-        echo "Do you want to use saved Account ? [y/n]"
-        read reply
-        case "$reply" in
-        [yY][eE][sS]|[yY] )
-        echo "Which account you want to use ? "
-        UseExistAccount=1
-        nl saved.txt
-        echo "please enter the number "
-        read number
-        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
-        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
-        ;;
-        [nN][oO]|[nN] )
-        UseExistAccount=0
-        ;;
-        esac
-    fi
-    if [[ "$HasExistAccount" == "" ]]; then
-        UseExistAccount=0
-    fi
-    if [[ $UseExistAccount = 0 ]]; then
-        echo "Please provide your AppleID"
-        read AppleID
-        echo "Please provide the password of AppleID"
-        read password
-    fi
-}
-
-# Execute AltServer
-# Check if this account existed before
-AltServer() {
-    if [[ $UseExistAccount = 1 ]]; then
-        ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
-    fi
-    if [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
-    fi
-    if [[ "$CheckAccount" == "" ]] ; then
-        RunScript=1
-    fi
-    if [[ "$CheckAccount" != "" ]] ; then
-        exit
-    fi
-}
-
-# Check if there exists ipa files in ipa folder
-# Ask which ipa want to install
-ipaCheck() {
-    if [[ "$HasExistipa" != "" ]]; then
-        echo "Please provide the number of ipa "
-        echo "$HasExistipa" > ipaList.txt
-        nl ipaList.txt
-        read ipanumber
-        Existipa=$(sed -n "$ipanumber"p ipaList.txt )
-    else
-        echo "There is no ipa filess in ipa folder "
-        exit
-    fi
-}
-
-# Ask to save the new account
-SaveAcccount() {
-    echo "Do you want to save this Account ? [y/n]"
-    read ans
-    case "$ans" in
-    [yY][eE][sS]|[yY] )
-    echo "$Account" >> saved.txt
-    echo "saved"
-    exit
-    ;;
-    [nN][oO]|[nN] )
-    exit
-    ;;
-    esac
-}
-
 # Show update avaliable message
 UpdateNotification() {
 if [[ $LatestVersion > $LocalVersion ]] ; then
@@ -176,39 +97,8 @@ while [ $RunScript = 0 ] ; do
     read option
     case "$option" in
     
-  1|--Install-AltStore )
-    killall AltServer
-    for job in `jobs -p`
-    do
-    wait $job
-    done
-
-    idevicepair pair
-    AskAccount
-    
-    Account=$AppleID,$password
-    CheckAccount=$(grep $Account saved.txt)
-    PATH=./AltStore.ipa
-    
-    AltServer
-    ;;
-    
-  2|--Install-ipa )
-    killall AltServer
-    for job in `jobs -p`
-    do
-    wait $job
-    done
-
-    idevicepair pair
-    ipaCheck
-    AskAccount
-
-    Account=$AppleID,$password
-    CheckAccount=$(grep $Account saved.txt)
-    PATH=./ipa/$Existipa
-    
-    AltServer
+  i|--Install-AltStore-or-ipa-files )
+    ./main
     ;;
         
   d|--Restart-Daemon-mode )
@@ -237,6 +127,3 @@ while [ $RunScript = 0 ] ; do
 
 done
 
-while [ $RunScript = 1 ] ; do
-    SaveAcccount
-done
