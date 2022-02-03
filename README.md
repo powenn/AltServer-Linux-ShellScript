@@ -50,27 +50,9 @@ run `./run.sh` to start
 
 ## Latest Video
 
-<a href="https://www.youtube.com/watch?v=YoQqZ3Xhn-w">
-  <img src="https://img.youtube.com/vi/YoQqZ3Xhn-w/maxresdefault.jpg" >
+<a href="https://www.youtube.com/watch?v=14uSA_JxZTo">
+  <img src="https://img.youtube.com/vi/14uSA_JxZTo/maxresdefault.jpg" >
 </a>
-
-### Video(install AltStore)
-
-<a href="https://www.youtube.com/watch?v=eraWIbdxyOo">
-  <img src="https://img.youtube.com/vi/eraWIbdxyOo/maxresdefault.jpg" >
-</a>
-
-<a href="https://www.youtube.com/watch?v=57JDy2GX1JY">
-  <img src="https://img.youtube.com/vi/57JDy2GX1JY/maxresdefault.jpg" >
-</a>
-
-### Video(install ipa)
-
-<a href="https://www.youtube.com/watch?v=AgqoaBQd_p8">
-  <img src="https://img.youtube.com/vi/AgqoaBQd_p8/maxresdefault.jpg" >
-</a>
-
-
 
 [0]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/00.jpg
 [1]:https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/photos/01.jpg
