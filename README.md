@@ -12,6 +12,13 @@ Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux pr
 
 ![photo][4]
 
+## About the script 
+
+It's just a simple script to make the operation of AltServer-Linux more easier with cli,now inclides features below
+
+For pull requests or issues or others questions to this script,please check [contributing.md](https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/contributing.md)
+
+
 ## Features
 - account saving
 - enter number to select and use saved account
@@ -20,12 +27,15 @@ Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux pr
 - Daemon mode will start automatically after device connected and press Enter
 - Update option and update notification
 
+## Announcement
+
+AltServer for Linux is from [NyaMisty](https://github.com/NyaMisty),so you should thank to NyaMisty more ,also for any question to AltServer-Linux,you should ask or crate issue in https://github.com/NyaMisty/AltServer-Linux rather than this repository,I just providing scripts to make the operation more easier. 
+
 ## Note 
 
 Just run `./run.sh` and follow the instruction
 
 ***Not work on every linux distribution and architectures,report issues to [issues](https://github.com/powenn/AltServer-Linux-ShellScript/issues)***
-
 
 ## Get start
 
