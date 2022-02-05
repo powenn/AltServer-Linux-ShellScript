@@ -16,9 +16,6 @@ Special thanks to [NyaMisty](https://github.com/NyaMisty) for AltServer-Linux pr
 
 It's just a simple script to make the operation of AltServer-Linux more easier with cli,now inclides features below
 
-For pull requests or issues or others questions to this script,please check [contributing.md](https://github.com/powenn/AltServer-Linux-ShellScript/blob/main/contributing.md)
-
-
 ## Features
 - account saving
 - enter number to select and use saved account
