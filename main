@@ -5,7 +5,6 @@ HasExistAccount=$(cat saved.txt)
 HasExistipa=$(ls ipa)
 UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
 
-cd "$(dirname "$0")"
 # Check if there exists saved account
 # Ask if want to use saved account
 AskAccount() {
@@ -19,8 +18,8 @@ AskAccount() {
         nl saved.txt
         echo "please enter the number "
         read number
-        ExistID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
-        ExistPasswd=$(sed -n "$number"p saved.txt | cut -d , -f 2)
+        AppleID=$(sed -n "$number"p saved.txt | cut -d , -f 1)
+        password=$(sed -n "$number"p saved.txt | cut -d , -f 2)
         ;;
         [nN][oO]|[nN] )
         UseExistAccount=0
@@ -41,12 +40,7 @@ AskAccount() {
 # Execute AltServer
 # Check if this account existed before
 AltServer() {
-    if [[ $UseExistAccount = 1 ]]; then
-        ./AltServer -u ${UDID} -a $ExistID -p $ExistPasswd $PATH
-    fi
-    if [[ $UseExistAccount = 0 ]]; then
-        ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
-    fi
+    ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
     if [[ "$CheckAccount" == "" ]] ; then
         AccountSaving=1
     fi

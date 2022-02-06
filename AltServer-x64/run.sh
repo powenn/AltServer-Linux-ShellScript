@@ -52,7 +52,9 @@ OPTIONS
     Show this message
   u, --Update
     Update this script or AltServer
-    
+
+For more information: https://github.com/powenn/AltServer-Linux-ShellScript
+
 EOF
 
 # Print AltServer icon

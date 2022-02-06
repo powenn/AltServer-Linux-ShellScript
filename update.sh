@@ -1,7 +1,6 @@
 #!/bin/bash
 # Author of the script : powen
 
-cd "$(dirname "$0")"
 LocalVersion=$(sed -n 1p version)
 LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/version')
 Arch=$(sed -n 2p version)
