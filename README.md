@@ -45,7 +45,7 @@ You need idevicemobile
 sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 ```
 ```
-audo apt-get install wget curl
+sudo apt-get install wget curl
 ```
 Please storage your ipa files into AltServer/ipa
 
