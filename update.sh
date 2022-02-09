@@ -6,7 +6,7 @@ LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript
 Arch=$(sed -n 2p version)
 DIR=$(pwd)
 if [[ $LatestVersion > $LocalVersion ]] ; then
-    rm -rf AltStore.ipa
+    rm -rf AltStore.ipa main
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
     wget https://github.com/powenn/AltServer-Linux-ShellScript/releases/download/$LatestVersion/AltServer-$Arch.zip
     unzip -o AltServer-$Arch.zip
@@ -24,10 +24,8 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 
 What updated in version $LatestVersion ?
   Script:
-    - Fix loop issue, now you can stay at the script after install AltStore or ipa
-    - Daemon mode will keep running in background,so you can sign in after install Altstore
-    - Merged 1 and 2 option into "i" option,in i option, you can select install AltStore or ipa or back to AltServer Script
     - Improved code
+    - you can delete help.txt,it wont be use anymore
     
 For more information: https://github.com/powenn/AltServer-Linux-ShellScript
 << PLease rerun the script to apply the new version >>
