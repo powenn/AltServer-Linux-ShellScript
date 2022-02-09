@@ -102,7 +102,6 @@ EOF
     mainScript=1
     RunScriptMain=1
     ;;
-        
   2|--Install-ipa-files )
     mainScript=2
     RunScriptMain=1
@@ -133,7 +132,5 @@ if [[ $AccountSaving = 1 ]] ; then
     SaveAcccount
 fi
 
-
-echo "<<  Done  >>"
-echo "Back to AltServer script"
+echo "<<  Back to AltServer script  >>"
 

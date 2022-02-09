@@ -16,13 +16,13 @@ fi
 if [[ ! -e "saved.txt" ]]; then
     touch saved.txt
 fi
-if [[ "stat main | grep -rw-r--r--" != "" ]] ; then
+if [[ "stat main | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x main
 fi
-if [[ "stat AltServer | grep -rw-r--r--" != "" ]] ; then
+if [[ "stat AltServer | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x AltServer
 fi
-if [[ "stat AltServerDaemon | grep -rw-r--r--" != "" ]] ; then
+if [[ "stat AltServerDaemon | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x AltServerDaemon
 fi
 
@@ -31,8 +31,9 @@ LocalVersion=$(sed -n 1p version)
 LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/version')
 
 
-# Instruction
-cat << EOF >help.txt
+# Help message
+HELP() {
+cat << EOF
     
 #####################################
 #  Welcome to the AltServer script  #
@@ -56,6 +57,7 @@ OPTIONS
 For more information: https://github.com/powenn/AltServer-Linux-ShellScript
 
 EOF
+}
 
 # Print AltServer icon
 AltServerIcon() {
@@ -89,7 +91,7 @@ fi
 
 # Start script
 AltServerIcon
-cat help.txt
+HELP
 UpdateNotification
 echo "Please connect to your device and press Enter to continue"
 read key
@@ -122,7 +124,7 @@ while [ $RunScript = 0 ] ; do
     ;;
   h|--Help )
     AltServerIcon
-    cat help.txt
+    HELP
     UpdateNotification
     ;;
   u|--Update )
