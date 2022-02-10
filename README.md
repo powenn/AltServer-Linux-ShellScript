@@ -23,6 +23,9 @@ It's just a simple script to make the operation of AltServer-Linux more easier w
 - only need one command to use the script `./run.sh`
 - Daemon mode will start automatically after device connected and press Enter
 - Update option and update notification
+### Python edition is now available
+
+For python edition,you can get from [AltServer-Linux-PyScript](https://github.com/powenn/AltServer-Linux-PyScript)
 
 ## Announcement
 
