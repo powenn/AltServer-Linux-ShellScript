@@ -24,8 +24,9 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 
 What updated in version $LatestVersion ?
   Script:
-    - Improved code
-    - you can delete help.txt,it wont be use anymore
+    - None
+  AltStore:
+    - Updated to 1.4.9
     
 For more information: https://github.com/powenn/AltServer-Linux-ShellScript
 << PLease rerun the script to apply the new version >>
