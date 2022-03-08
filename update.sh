@@ -27,6 +27,9 @@ What updated in version $LatestVersion ?
     - None
   AltStore:
     - Updated to 1.4.9
+  Others:
+    - GUI edition is now available
+      if interested,please check https://github.com/powenn/AltServer-LinuxGUI
     
 For more information: https://github.com/powenn/AltServer-Linux-ShellScript
 << PLease rerun the script to apply the new version >>
