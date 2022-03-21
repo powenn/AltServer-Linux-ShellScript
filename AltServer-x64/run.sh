@@ -22,9 +22,6 @@ fi
 if [[ "stat AltServer | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x AltServer
 fi
-if [[ "stat AltServerDaemon | grep -- '-rw-r--r--'" != "" ]] ; then
-    chmod +x AltServerDaemon
-fi
 
 # Version
 LocalVersion=$(sed -n 1p version)
@@ -96,7 +93,7 @@ UpdateNotification
 echo "Please connect to your device and press Enter to continue"
 read key
 idevicepair pair > /dev/null
-./AltServerDaemon &> /dev/null &
+./AltServer &> /dev/null &
 
 RunScript=0
 while [ $RunScript = 0 ] ; do
@@ -109,17 +106,17 @@ while [ $RunScript = 0 ] ; do
     ;;
         
   d|--Restart-Daemon-mode )
-    killall AltServerDaemon
+    killall AltServer
     for job in `jobs -p`
     do
     wait $job
     done
 
     idevicepair pair
-    ./AltServerDaemon &> /dev/null &
+    ./AltServer &> /dev/null &
     ;;
   e|--Exit )
-    killall AltServerDaemon
+    killall AltServer
     exit
     ;;
   h|--Help )

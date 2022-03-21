@@ -16,9 +16,6 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
     if [[ -e "AltServer" ]]; then
         chmod +x AltServer
     fi
-    if [[ -e "AltServerDaemon" ]]; then
-        chmod +x AltServerDaemon
-    fi
     echo "Done"
   cat << EOF
 
@@ -27,6 +24,8 @@ What updated in version $LatestVersion ?
     - None
   AltStore:
     - Updated to 1.4.9
+  AltSerevr:
+    - Fix Support fot iOS 15(currently only x64)
   Others:
     - GUI edition is now available
       if interested,please check https://github.com/powenn/AltServer-LinuxGUI
