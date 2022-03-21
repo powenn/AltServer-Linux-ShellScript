@@ -21,7 +21,7 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 
 What updated in version $LatestVersion ?
   Script:
-    - None
+    - AltSerevrDaemon is no longer needed,you can delete it
   AltStore:
     - Updated to 1.4.9
   AltSerevr:
