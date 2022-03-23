@@ -25,7 +25,7 @@ What updated in version $LatestVersion ?
   AltStore:
     - Updated to 1.4.9
   AltSerevr:
-    - Fix Support fot iOS 15(currently only x64)
+    - Fix Support fot iOS 15
   Others:
     - GUI edition is now available
       if interested,please check https://github.com/powenn/AltServer-LinuxGUI
