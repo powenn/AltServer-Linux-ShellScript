@@ -48,6 +48,8 @@ OPTIONS
     Exit script
   h, --Help
     Show this message
+  p, --Pair
+    Pair device
   u, --Update
     Update this script or AltServer
 
@@ -104,7 +106,6 @@ while [ $RunScript = 0 ] ; do
   i|--Install-AltStore-or-ipa-files )
     ./main
     ;;
-        
   d|--Restart-Daemon-mode )
     killall AltServer
     for job in `jobs -p`
@@ -123,6 +124,9 @@ while [ $RunScript = 0 ] ; do
     AltServerIcon
     HELP
     UpdateNotification
+    ;;
+  p|--Pair )
+    idevicepair pair
     ;;
   u|--Update )
     curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/update.sh' | bash
