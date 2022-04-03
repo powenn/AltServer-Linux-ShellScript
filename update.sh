@@ -22,7 +22,7 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 What updated in version $LatestVersion ?
   Script:
     - AltSerevrDaemon is no longer needed,you can delete it
-    - Added pair option for pair manually
+    - Fixed 24 characters UDID issue
   AltStore:
     - Updated to 1.4.9
   AltSerevr:
