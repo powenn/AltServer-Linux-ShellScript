@@ -3,3 +3,5 @@ ReleaseFile
 .DS_Store
 Self
 AltServer-*
+AltServerData
+saved.txt

@@ -3,7 +3,14 @@
 
 HasExistAccount=$(cat saved.txt)
 HasExistipa=$(ls ipa)
-UDID=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
+_udid=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
+_udid_length=${#_udid} 
+if [ $_udid_length == "24" ]; then
+    UDID=${_udid:0:8}"-"${_udid:8}
+fi
+if [ $_udid_length == "40" ]; then
+    UDID=$_udid
+fi
 
 # Check if there exists saved account
 # Ask if want to use saved account
@@ -40,7 +47,7 @@ AskAccount() {
 # Execute AltServer
 # Check if this account existed before
 AltServer() {
-    ./AltServer -u ${UDID} -a $AppleID -p $password $PATH
+    ./AltServer -u ${UDID} -a $AppleID -p $password $IPA_PATH
     if [[ "$CheckAccount" == "" ]] ; then
         AccountSaving=1
     fi
@@ -115,7 +122,7 @@ if [[ $mainScript = 1 ]] ; then
     AskAccount
     Account=$AppleID,$password
     CheckAccount=$(grep $Account saved.txt)
-    PATH=./AltStore.ipa
+    IPA_PATH=./AltStore.ipa
     AltServer
 fi
 if [[ $mainScript = 2 ]] ; then
@@ -124,7 +131,7 @@ if [[ $mainScript = 2 ]] ; then
         AskAccount
         Account=$AppleID,$password
         CheckAccount=$(grep $Account saved.txt)
-        PATH=./ipa/$Existipa
+        IPA_PATH=./ipa/$Existipa
         AltServer
     fi
 fi
