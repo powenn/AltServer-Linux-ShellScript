@@ -21,9 +21,8 @@ if [[ $LatestVersion > $LocalVersion ]] ; then
 
 What updated in version $LatestVersion ?
   Script:
-    - AltSerevrDaemon is no longer needed,you can delete it
-    - Fixed 24 characters UDID issue
     - support wifi refresh (only x64 currently)
+    - x64 version have several modification , deleted 'd' option and added 'w' and 't'
   AltStore:
     - Updated to 1.4.9
   AltSerevr:

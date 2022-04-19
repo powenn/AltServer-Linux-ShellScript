@@ -48,8 +48,10 @@ OPTIONS
 
   i, --Install AltStore or ipa files
     Install AltStore or ipa files to your device
-  d, --Restart Daemon mode
-    Restart Daemon mode to refresh apps or AltStore
+  w, --Switch to wifi Daemode mode (Default using it after launch)
+    Switch and restart to wifi Daemode mode to refresh apps or AltStore
+  t, --Switch to usb tethered Daemode mode
+    Switch and restart to usb tethered Daemode mode to refresh apps or AltStore
   e, --Exit
     Exit script
   h, --Help
@@ -111,13 +113,24 @@ while [ $RunScript = 0 ] ; do
   i|--Install-AltStore-or-ipa-files )
     ./main
     ;;
-  d|--Restart-Daemon-mode )
+  w|--Switch-to-wifi-Daemode-mode )
     killall AltServer
+    sudo killall netmuxd
     for job in `jobs -p`
     do
     wait $job
     done
 
+    sudo -b -S ./netmuxd
+    ./AltServer &> /dev/null &
+    ;;
+  t|--Switch-to-usb-tethered-Daemode-mode )
+    killall AltServer
+    sudo killall netmuxd
+    for job in `jobs -p`
+    do
+    wait $job
+    done
     ./AltServer &> /dev/null &
     ;;
   e|--Exit )

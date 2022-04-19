@@ -83,7 +83,6 @@ SaveAcccount() {
 }
 
 # Start Script Main
-idevicepair pair
 RunScriptMain=0
 while [ $RunScriptMain = 0 ] ; do
 cat << EOF
