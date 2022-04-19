@@ -10,6 +10,9 @@ fi
 if [[ ! -e "main" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
 fi
+if [[ ! -e "netmuxd" ]]; then
+    wget https://github.com/jkcoxson/netmuxd/releases/download/v0.1.1/netmuxd
+fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
 fi
@@ -21,6 +24,9 @@ if [[ "stat main | grep -- '-rw-r--r--'" != "" ]] ; then
 fi
 if [[ "stat AltServer | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x AltServer
+fi
+if [[ "stat netmuxd | grep -- '-rw-r--r--'" != "" ]] ; then
+    chmod +x netmuxd
 fi
 
 # Version
@@ -93,6 +99,7 @@ AltServerIcon
 HELP
 UpdateNotification
 
+sudo -b -S ./netmuxd
 ./AltServer &> /dev/null &
 
 RunScript=0
@@ -115,6 +122,7 @@ while [ $RunScript = 0 ] ; do
     ;;
   e|--Exit )
     killall AltServer
+    sudo killall netmuxd
     exit
     ;;
   h|--Help )
