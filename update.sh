@@ -6,7 +6,7 @@ LatestVersion=$(curl -Lsk 'https://github.com/powenn/AltServer-Linux-ShellScript
 Arch=$(sed -n 2p version)
 DIR=$(pwd)
 if [[ $LatestVersion > $LocalVersion ]] ; then
-    rm -rf AltStore.ipa main
+    rm -rf AltStore.ipa main netmuxd
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/AltStore.ipa
     wget https://github.com/powenn/AltServer-Linux-ShellScript/releases/download/$LatestVersion/AltServer-$Arch.zip
     unzip -o AltServer-$Arch.zip
@@ -23,10 +23,13 @@ What updated in version $LatestVersion ?
   Script:
     - AltSerevrDaemon is no longer needed,you can delete it
     - Fixed 24 characters UDID issue
+    - support wifi refresh (only x64 currently)
   AltStore:
     - Updated to 1.4.9
   AltSerevr:
     - Fix Support for iOS 15
+    - Updated to v0.0.5
+    - with netmuxd ,you can do wifi refresh (only x64 currently)
   Others:
     - GUI edition is now available
       if interested,please check https://github.com/powenn/AltServer-LinuxGUI
