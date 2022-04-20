@@ -50,7 +50,7 @@ You need idevicemobile
 sudo apt-get install usbmuxd libimobiledevice6 libimobiledevice-utils
 ```
 ```
-sudo apt-get install wget curl
+sudo apt-get install wget curl libavahi-compat-libdnssd-dev
 ```
 Please storage your ipa files into AltServer/ipa
 
