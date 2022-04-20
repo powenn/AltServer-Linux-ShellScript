@@ -32,6 +32,7 @@ What updated in version $LatestVersion ?
   Others:
     - GUI edition is now available
       if interested,please check https://github.com/powenn/AltServer-LinuxGUI
+    - please make sure you have install libavahi-compat-libdnssd-dev
     
 For more information: https://github.com/powenn/AltServer-Linux-ShellScript
 << PLease rerun the script to apply the new version >>
