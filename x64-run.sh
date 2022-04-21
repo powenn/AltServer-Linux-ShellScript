@@ -11,7 +11,7 @@ if [[ ! -e "main" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
 fi
 if [[ ! -e "netmuxd" ]]; then
-    wget https://github.com/jkcoxson/netmuxd/releases/download/v0.1.1/netmuxd
+    curl -L https://github.com/jkcoxson/netmuxd/releases/download/v0.1.2/netmuxd-x86_64 > netmuxd
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
