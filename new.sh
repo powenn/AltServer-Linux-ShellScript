@@ -132,12 +132,10 @@ while [ $RunScript = 0 ] ; do
         killall AltServer
         sudo killall netmuxd
         NETMUXD_IS_ON=1
-    fi
-    for job in `jobs -p`
-    do
-    wait $job
-    done
-    if [[ $NETMUXD_IS_AVAILABLE == 1 ]]; then
+        for job in `jobs -p`
+        do
+        wait $job
+        done
         sudo -b -S ./netmuxd
         ./AltServer &> /dev/null &
     else 
