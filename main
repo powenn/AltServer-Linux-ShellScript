@@ -3,14 +3,7 @@
 
 HasExistAccount=$(cat saved.txt)
 HasExistipa=$(ls ipa)
-_udid=$(lsusb -v 2> /dev/null | grep -e "Apple Inc" -A 2 | grep iSerial | awk '{print $3}')
-_udid_length=${#_udid} 
-if [ $_udid_length == "24" ]; then
-    UDID=${_udid:0:8}"-"${_udid:8}
-fi
-if [ $_udid_length == "40" ]; then
-    UDID=$_udid
-fi
+UDID=$(idevice_id -l)
 
 # Check if there exists saved account
 # Ask if want to use saved account
@@ -118,20 +111,28 @@ EOF
     esac
 done
 if [[ $mainScript = 1 ]] ; then
-    AskAccount
-    Account=$AppleID,$password
-    CheckAccount=$(grep $Account saved.txt)
-    IPA_PATH=./AltStore.ipa
-    AltServer
+    if [[ "$NETMUXD_IS_ON" == 0 ]]; then
+        AskAccount
+        Account=$AppleID,$password
+        CheckAccount=$(grep $Account saved.txt)
+        IPA_PATH=./AltStore.ipa
+        AltServer
+    else 
+        echo "Install throught wifi isn't support yet"
+    fi
 fi
 if [[ $mainScript = 2 ]] ; then
     ipaCheck
     if [[ $NoIpaFile != 1 ]] ; then
-        AskAccount
-        Account=$AppleID,$password
-        CheckAccount=$(grep $Account saved.txt)
-        IPA_PATH=./ipa/$Existipa
-        AltServer
+        if [[ "$NETMUXD_IS_ON" == 0 ]]; then
+            AskAccount
+            Account=$AppleID,$password
+            CheckAccount=$(grep $Account saved.txt)
+            IPA_PATH=./ipa/$Existipa
+            AltServer
+        else 
+            echo "Install throught wifi isn't support yet"
+        fi
     fi
 fi
 if [[ $AccountSaving = 1 ]] ; then
