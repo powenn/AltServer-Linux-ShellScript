@@ -1,14 +1,26 @@
 #!/bin/bash
 # Author of the script : powen
 
+# Get Arch
+ARCH=$(uname -m)
+NETMUXD_AVAILABLE_ARCHS=("x86_64")
+NETMUXD_IS_AVAILABLE=0
+NETMUXD_IS_ON=0
+
 # Check source and permission
 cd "$(dirname "$0")" || exit
 echo "Checking source"
+if [[ ! -e "AltServer" ]]; then
+    curl -L https://github.com/NyaMisty/AltServer-Linux/releases/download/v0.0.5/AltServer-"$ARCH" > AltServer
+fi
 if [[ ! -e "AltStore.ipa" ]]; then
-    curl -L https://cdn.altstore.io/file/altstore/apps/altstore/1_4_9.ipa > AltStore.ipa
+    curl -L https://cdn.altstore.io/file/altstore/apps/altstore/1_5_1.ipa > AltStore.ipa
 fi
 if [[ ! -e "main" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
+fi
+if [[ ! -e "netmuxd" && ${NETMUXD_AVAILABLE_ARCHS[*]} =~ ${ARCH} ]]; then
+    curl -L https://github.com/jkcoxson/netmuxd/releases/download/v0.1.2/netmuxd-"$ARCH" > netmuxd
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
@@ -21,6 +33,9 @@ if [[ "stat main | grep -- '-rw-r--r--'" != "" ]] ; then
 fi
 if [[ "stat AltServer | grep -- '-rw-r--r--'" != "" ]] ; then
     chmod +x AltServer
+fi
+if [[ "stat netmuxd | grep -- '-rw-r--r--'" != "" ]] ; then
+    chmod +x netmuxd
 fi
 
 # Version
@@ -42,8 +57,10 @@ OPTIONS
 
   i, --Install AltStore or ipa files
     Install AltStore or ipa files to your device
-  d, --Restart Daemon mode
-    Restart Daemon mode to refresh apps or AltStore
+  w, --Switch to wifi Daemode mode (Default using it after launch)
+    Switch and restart to wifi Daemode mode to refresh apps or AltStore
+  t, --Switch to usb tethered Daemode mode
+    Switch and restart to usb tethered Daemode mode to refresh apps or AltStore
   e, --Exit
     Exit script
   h, --Help
@@ -89,9 +106,14 @@ fi
 }
 
 # Start script
-AltServerIcon
+
+# AltServerIcon
 HELP
 UpdateNotification
+if [[ ${NETMUXD_AVAILABLE_ARCHS[*]} =~ ${ARCH} ]]; then
+    NETMUXD_IS_AVAILABLE=1
+    sudo -b -S ./netmuxd
+fi
 
 ./AltServer &> /dev/null &
 
@@ -102,23 +124,45 @@ while [ $RunScript = 0 ] ; do
     case "$option" in
     
   i|--Install-AltStore-or-ipa-files )
+    export "NETMUXD_IS_ON"=$NETMUXD_IS_ON
     ./main
     ;;
-  d|--Restart-Daemon-mode )
+  w|--Switch-to-wifi-Daemon-mode )
+    if [[ $NETMUXD_IS_AVAILABLE == 1 ]]; then
+        killall AltServer
+        sudo killall netmuxd
+        NETMUXD_IS_ON=1
+        for job in `jobs -p`
+        do
+        wait $job
+        done
+        sudo -b -S ./netmuxd
+        ./AltServer &> /dev/null &
+    else 
+        echo "wifi-Daemon-mode is not available for your architecture"
+    fi
+    ;;
+  t|--Switch-to-usb-tethered-Daemode-mode )
     killall AltServer
+    if [[ $NETMUXD_IS_AVAILABLE == 1 ]]; then
+        sudo killall netmuxd
+        NETMUXD_IS_ON=0
+    fi
     for job in `jobs -p`
     do
     wait $job
     done
-
     ./AltServer &> /dev/null &
     ;;
   e|--Exit )
     killall AltServer
+    if [[ $NETMUXD_IS_AVAILABLE == 1 ]]; then
+        sudo killall netmuxd
+    fi
     exit
     ;;
   h|--Help )
-    AltServerIcon
+    # AltServerIcon
     HELP
     UpdateNotification
     ;;
