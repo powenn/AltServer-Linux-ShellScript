@@ -3,7 +3,7 @@
 
 # Get Arch
 ARCH=$(uname -m)
-NETMUXD_AVAILABLE_ARCHS=("x86_64")
+NETMUXD_AVAILABLE_ARCHS=("x86_64" "aarch64" "armv7")
 NETMUXD_IS_AVAILABLE=0
 NETMUXD_IS_ON=0
 
@@ -20,7 +20,7 @@ if [[ ! -e "main" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
 fi
 if [[ ! -e "netmuxd" && ${NETMUXD_AVAILABLE_ARCHS[*]} =~ ${ARCH} ]]; then
-    curl -L https://github.com/jkcoxson/netmuxd/releases/download/v0.1.2/netmuxd-"$ARCH" > netmuxd
+    curl -L https://github.com/jkcoxson/netmuxd/releases/download/v0.1.4/"$ARCH"-linux-netmuxd > netmuxd
 fi
 if [[ ! -e "ipa" ]]; then
     mkdir ipa
