@@ -7,6 +7,11 @@ NETMUXD_AVAILABLE_ARCHS=("x86_64" "aarch64" "armv7" "armv7l")
 NETMUXD_IS_AVAILABLE=0
 NETMUXD_IS_ON=0
 
+# armv7l can run armv7
+if [[ $ARCH == 'armv7l' ]]; then
+    ARCH='armv7'
+fi
+
 # Check source and permission
 cd "$(dirname "$0")" || exit
 echo "Checking source"
