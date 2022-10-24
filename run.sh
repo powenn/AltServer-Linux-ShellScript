@@ -3,7 +3,7 @@
 
 # Get Arch
 ARCH=$(uname -m)
-NETMUXD_AVAILABLE_ARCHS=("x86_64" "aarch64" "armv7")
+NETMUXD_AVAILABLE_ARCHS=("x86_64" "aarch64" "armv7" "armv7l")
 NETMUXD_IS_AVAILABLE=0
 NETMUXD_IS_ON=0
 
