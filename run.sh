@@ -18,8 +18,8 @@ echo "Checking source"
 if [[ ! -e "AltServer" ]]; then
     curl -L https://github.com/NyaMisty/AltServer-Linux/releases/download/v0.0.5/AltServer-"$ARCH" > AltServer
 fi
-if [[ ! -e "AltStore.ipa" ]]; then
-    curl -L https://cdn.altstore.io/file/altstore/apps/altstore/1_5_1.ipa > AltStore.ipa
+if [[ ! -e "AltStore.ipa" ]] || !( md5sum AltStore.ipa | cut -f 1 -d " " | grep -q "e3ac2bd77cedf0fa80531023d402ba83" ); then
+    curl -L https://cdn.altstore.io/file/altstore/apps/altstore/1_6_2.ipa > AltStore.ipa
 fi
 if [[ ! -e "main" ]]; then
     wget https://github.com/powenn/AltServer-Linux-ShellScript/raw/main/main
