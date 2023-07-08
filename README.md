@@ -2,7 +2,7 @@
 
 # READ THIS
 
-This project will be deprecate soon
+This project might be deprecate in future
 
 Use this instead
 
