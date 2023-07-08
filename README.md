@@ -1,9 +1,18 @@
 # AltServer-Linux-ShellScript
 
-Works on debian 11 x64 !!
+# READ THIS
 
-And works on pinephone (tested on mobian)
+This project will be deprecate soon
 
+Use this instead
+
+https://github.com/powenn/AltServer-Linux-PyScript
+
+I have rewrite it for better experience and maintenance
+
+# READ THIS
+
+---
 Demo videos at the bottom
 
 AltServer from https://github.com/NyaMisty/AltServer-Linux/releases
@@ -25,9 +34,6 @@ It's just a simple script to make the operation of AltServer-Linux more easier w
 - Update option and update notification
 ### Others editions are available
 
-For python edition,you can get from [AltServer-Linux-PyScript](https://github.com/powenn/AltServer-Linux-PyScript)
-
-For GUI edition,you can get from [AltServer-LinuxGUI](https://github.com/powenn/AltServer-LinuxGUI)
 
 ## Announcement
 
